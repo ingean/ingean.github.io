@@ -33,27 +33,6 @@ function findClosest() {
   closestFacility(CFparams, 0);
 }
 
-function findStandby() {
-  btnSpinner(true, '#btn-findStandby');
-  var selectedDay = moment($('#input-date').val()).format('dddd');
-  selectedDay = selectedDay.charAt(0).toUpperCase() + selectedDay.slice(1);
-  console.log(selectedDay);
-  var url = url_locationAllocation +
-            '/submitJob?f=json&Dag=' + selectedDay;
-
- $.get(url)
-  .done(response => {
-    console.log('Submitted request for location allocation successfully')
-    console.log('Check job status with: ');
-    console.log(url_locationAllocation + '/jobs/' + response.jobId + '?f=json');
-    checkGPJob(response.jobId);
-  })
-  .fail(error => {
-    console.log('Failed to find standby locations: ' + error);
-    showError('Failed to find standby locations');
-  })
-}
-
 function dispatchStandby() {
   btnSpinner(true, '#btn-dispatchStandby');
   deleteExistingRoutes();
@@ -165,32 +144,6 @@ function btnSpinner(activate, btnID) {
   }
 }
 
-function checkGPJob(jobId, freq = 5000, maxQueries = 50) {
-  var url = url_locationAllocation + '/jobs/' + jobId + '?f=json';
-  if(maxQueries > 0) {
-    $.get(url)
-    .done(response => {
-      if(response.jobStatus !== 'esriJobSucceeded'&& response.jobStatus !== 'esriJobFailed') {
-        setTimeout(() => {
-          checkGPJob(jobId, freq, maxQueries - 1);
-        }, freq);
-      } else if(response.jobStatus === 'esriJobFailed') {
-        btnSpinner(false);
-        console.log('Allocation-Location failed with the following messages: ' + response.messages);
-        showError('Failed to optimize standby points');
-      } else {
-        btnSpinner(false);
-      }
-    })
-    .fail(error => {
-      console.log('Failed to get job status: ' + error);
-    })
-  } else {
-    console.log('GP tool timed out');
-    btnSpinner(false);
-  }
-}
-
 function checkVRPJob(jobId, freq = 5000, maxQueries = 50) {
   var url = url_VRP + '/jobs/' + jobId; 
   if(maxQueries > 0) {
@@ -283,38 +236,9 @@ function showError(message, type= 'danger') {
   });
 }
 
-function startSimulation(features) {
-  var url = url_simulator + '/submitJob';
-  var data = {
-    "f":"json",
-    "Hastighet": hastighet,
-    "Linjer":JSON.stringify({
-      "fields": schema_routes.fields,
-      "geometryType": schema_routes.geometryType,
-      "features": features,
-      "sr": schema_routes.sr
-    })
-  }; 
-
-  $.post(url,data)
-  .done(response => {
-    console.log('Submitted request for starting simulation successfully')
-    console.log('Check job status with: ');
-    console.log(url_simulator + '/jobs/' + response.jobId + '?f=json');
-    checkGPJob(response.jobId);
-  })
-  .fail(error => {
-    console.log('Failed to submit features to GeoEvent simulator: ' + error);
-    showError('Failed to submit features to GeoEvent simulator');  
-  })
-}
-
 function appendAttributes(features, attributes) {
   for(var i = 0; i < features.length; i++) {
     Object.assign(features[i].attributes, attributes);
   }
   return features;
 }
-
-
-

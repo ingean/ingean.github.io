@@ -1,6 +1,6 @@
-const schema_cbrne = {
+var schema_cbrne = {
   "f": "json",
-  "env:outSR": 25833,
+  "outSR": 25833,
   "Senterpunkt": {
     "fields":[
       {"name":"objectid","type":"esriFieldTypeOID","alias":"objectid","editable":false,"nullable":false,"description":null,"domain":null},
@@ -13,10 +13,10 @@ const schema_cbrne = {
       "attributes":{"objectid":2807,"type":"Gass: Giftig 2","beskrivelse":null}
     }],
     "sr":{"wkid":25833,"latestWkid":25833}
-  }
-  "Vind_fra_YR_no": false
-  "Brukerdefinert_vindretning": "NE"
-  "Brukerdefinert_vindstyrke": 15
-  "Beskrivelse": "Gass: Stort utslipp (brudd på rør)"
+  },
+  "Vind_fra_YR_no": false,
+  "Brukerdefinert_vindretning": "NE",
+  "Brukerdefinert_vindstyrke": 15,
+  "Beskrivelse": "Gass: Stort utslipp (brudd på rør)",
   "Slett_gamle_soner": true
 };

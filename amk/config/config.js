@@ -25,6 +25,6 @@ const url_simulator = 'https://demo09.geodata.no/arcgis/rest/services/AMKSimulat
 const hastighet = 100;
 
 //Plume tool
-const url_plumeGP = 'https://demo01.geodata.no/arcgis/rest/services/GP_Tjenester/CBRNE_Tool/GPServer';
+const url_plumeGP = 'https://demo01.geodata.no/arcgis/rest/services/GP_Tjenester/CBRNE_Tool/GPServer/PlumeTool';
 
 
