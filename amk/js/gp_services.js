@@ -1,6 +1,7 @@
 function executePlume() {
   $.get(url_incident.url + '&outSR=25833')
   .done(response => {
+    response = JSON.parse(response);
     var url = url_plumeGP + '/submitJob';
     var features = appendAttributes(response.features, {"type": "Gass: Giftig 2"});
     schema_cbrne.Senterpunkt["fields"] = response.fields;
