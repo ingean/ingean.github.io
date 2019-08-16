@@ -297,7 +297,7 @@ function startSimulation(features) {
   var url = url_simulator + '/submitJob';
   var data = {
     "f":"json",
-    "Hastighet":300,
+    "Hastighet": hastighet,
     "Linjer":JSON.stringify({
       "fields": routes_schema.fields,
       "geometryType": routes_schema.geometryType,

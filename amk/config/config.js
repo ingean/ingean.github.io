@@ -22,4 +22,5 @@ const url_locationAllocation = 'https://demo01.geodata.no/arcgis/rest/services/A
 
 //GeoEvent Simulation
 const url_simulator = 'https://demo09.geodata.no/arcgis/rest/services/AMKSimulatorTjeneste/GPServer/AMK%20Simulator%20Script';
+const hastighet = 100;
 
