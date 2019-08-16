@@ -99,7 +99,7 @@ function closestFacility(data) {
   $.post(url_closestFacility, data)
   .done(response => {
     addFeatures(url_routes, response.routes.features);
-    var routes = routesFieldMapping(response.route.features,'Rykker ut');
+    var routes = routesFieldMapping(response.routes.features,'Rykker ut');
     startSimulation(routes);
   })
   .fail(error => {
