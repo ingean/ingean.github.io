@@ -132,7 +132,7 @@ function closestFacility(data) {
   $.post(url_closestFacility, data)
   .done(response => {
     addFeatures(url_routes, response.routes.features);
-    startSimulation(response.routes.features);
+    startSimulation(response.routes.features,'Utrykning');
   })
   .fail(error => {
     console.log('Failed to find closest facilities: ' + error);
@@ -257,7 +257,7 @@ function createRoutes(url) {
 function getVRPRoutes(url_job, url_results_routes) {
   $.get(url_job + '/' + url_results_routes + '?f=json&token=' + TOKEN)
   .done(response => {
-    var routes = routesFieldMapping(response.value.features);
+    var routes = routesFieldMapping(response.value.features,'Omplassering');
     addFeatures(url_routes, routes);
     startSimulation(routes);
   })
@@ -267,7 +267,7 @@ function getVRPRoutes(url_job, url_results_routes) {
   })
 }
 
-function routesFieldMapping(inRoutes) {
+function routesFieldMapping(inRoutes, routeType) {
   var outRoutes = [];
   for(var i = 0; i < inRoutes.length; i++) {
     var attributes = {
@@ -278,7 +278,8 @@ function routesFieldMapping(inRoutes) {
       "StartTimeUTC":inRoutes[i].attributes.StartTimeUTC,
       "EndTimeUTC":inRoutes[i].attributes.EndTimeUTC,
       "Total_TravelTime":inRoutes[i].attributes.TotalTravelTime,
-      "Total_Kilometers":inRoutes[i].attributes.TotalDistance
+      "Total_Kilometers":inRoutes[i].attributes.TotalDistance,
+      "RouteType":routeType
     };
     inRoutes[i].attributes = attributes;
     outRoutes.push(inRoutes[i]);
