@@ -21,9 +21,11 @@
     <script type="text/javascript" src="js/lib/moment.loc.min.js"></script>
     <script type="text/javascript" src="js/lib/bootstrap-notify.min.js"></script>
     <script type="text/javascript" src="config/config.js"></script>
-    <script type="text/javascript" src="config/config_routes_schema.js"></script>
+    <script type="text/javascript" src="config/schema_routes.js"></script>
+    <script type="text/javascript" src="config/schema_cbrne.js"></script>
     <script type="text/javascript" src="js/init.js"></script>
     <script type="text/javascript" src="js/amk.js"></script>
+    <script type="text/javascript" src="js/gp_services.js"></script>
   </head>
   <body>
     <div class="container">
@@ -55,6 +57,13 @@
           <label class="my-1 mr-2" for="btn-dispatchStandby">mer enn</label>
           <input id="input-minCutOff" class="input-number" type="number" min="0" max="1" value="0">
           <label class="my-1 mr-2" for="btn-dispatchStandby">min. unna en standbylokasjon</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+          <button id="btn-createPlumes" type="button" class="btn btn-primary" onclick="executePlume()"> 
+            Lag sikkerhetssoner
+          </button>
         </div>
       </div>
     </div>

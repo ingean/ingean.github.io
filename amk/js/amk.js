@@ -50,10 +50,7 @@ function findStandby() {
   })
   .fail(error => {
     console.log('Failed to find standby locations: ' + error);
-    $.notify({
-      message: "Failed to find standby locations",
-      type: "Danger"
-    });
+    showError('Failed to find standby locations');
   })
 }
 
@@ -70,10 +67,7 @@ function dispatchStandby() {
   })
   .catch(error => {
     console.log('Not able to get features to make routes: ' + error);
-    $.notify({
-      message: "Failed to allocate resources to standby points",
-      type: "Danger"
-    });
+    showError('Not able to get features to make routes');
   })
 }
 
@@ -89,10 +83,7 @@ function deleteExistingRoutes() {
   })
   .fail(error => {
     console.log('Failed to delete all existing routes: ' + error);
-    $.notify({
-      message: "Failed to delete existing routes",
-      type: "Danger"
-    });
+    showError('Failed to delete all existing routes');
   })
 }
 
@@ -109,10 +100,7 @@ function addFeatures(url, features) {
   })
   .fail(error => {
     console.log('Failed to add features to feature service: ' + error);
-    $.notify({
-      message: "Failed to add features to feature service",
-      type: "Danger"
-    });
+    showError('Failed to add features to feature service');
   })
 }
 
@@ -300,10 +288,10 @@ function startSimulation(features) {
     "f":"json",
     "Hastighet": hastighet,
     "Linjer":JSON.stringify({
-      "fields": routes_schema.fields,
-      "geometryType": routes_schema.geometryType,
+      "fields": schema_routes.fields,
+      "geometryType": schema_routes.geometryType,
       "features": features,
-      "sr": routes_schema.sr
+      "sr": schema_routes.sr
     })
   }; 
 

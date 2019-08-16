@@ -1,4 +1,4 @@
-var routes_schema = {
+var schema_routes = {
   "fields":[
      {
         "name":"OBJECTID",
