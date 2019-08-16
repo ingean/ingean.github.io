@@ -298,7 +298,12 @@ function startSimulation(features) {
   var data = {
     "f":"json",
     "Hastighet":300,
-    "Linjer":JSON.stringify({"features": features})
+    "Linjer":JSON.stringify({
+      "fields": routes_schema.fields,
+      "geometryType": routes_schema.geometryType,
+      "features": features,
+      "sr": routes_schema.sr
+    })
   }; 
 
   $.post(url,data)
