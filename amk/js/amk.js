@@ -120,7 +120,8 @@ function closestFacility(data) {
   $.post(url_closestFacility, data)
   .done(response => {
     addFeatures(url_routes, response.routes.features);
-    startSimulation(response.routes.features,'Utrykning');
+    var routes = routesFieldMapping(response.route.features,'Rykker ut');
+    startSimulation(routes);
   })
   .fail(error => {
     console.log('Failed to find closest facilities: ' + error);
@@ -306,6 +307,13 @@ function startSimulation(features) {
     console.log('Failed to submit features to GeoEvent simulator: ' + error);
     showError('Failed to submit features to GeoEvent simulator');  
   })
+}
+
+function appendAttributes(features, attributes) {
+  for(var i = 0; i < features.length; i++) {
+    Object.assign(features[i].attributes, attributes);
+  }
+  return features;
 }
 
 
