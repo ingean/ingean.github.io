@@ -24,3 +24,7 @@ const url_locationAllocation = 'https://demo01.geodata.no/arcgis/rest/services/A
 const url_simulator = 'https://demo09.geodata.no/arcgis/rest/services/AMKSimulatorTjeneste/GPServer/AMK%20Simulator%20Script';
 const hastighet = 100;
 
+//Plume tool
+const url_plumeGP = 'https://demo01.geodata.no/arcgis/rest/services/GP_Tjenester/CBRNE_Tool/GPServer';
+
+
