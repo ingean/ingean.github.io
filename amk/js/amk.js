@@ -242,3 +242,12 @@ function appendAttributes(features, attributes) {
   }
   return features;
 }
+
+function replaceAttributes(features, attributes, wkid) {
+  for(var i = 0; i < features.length; i++) {
+    attributes.objectid = i;
+    features[i].attributes = attributes;
+    features[i].geometry["spatialReference"] = {"wkid":wkid,"latestWkid":wkid};
+  }
+  return features;
+}

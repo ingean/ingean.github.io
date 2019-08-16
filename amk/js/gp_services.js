@@ -25,10 +25,9 @@ function executePlume() {
   .done(response => {
     response = JSON.parse(response);
     var url = url_plumeGP + '/submitJob';
-    response.fields.push({"name":"type","type":"esriFieldTypeString","alias":"Utslippstype","length":256,"editable":true,"nullable":true,"description":null,"domain":null});
-    var features = appendAttributes(response.features, {"type": "Gass: Giftig 2"});
+    var features = replaceAttributes(response.features, {"objectid":1,"type": "Gass: Giftig 2", "beskrivelse": ""},25833);
     
-    schema_cbrne.Senterpunkt["fields"] = response.fields;
+    //schema_cbrne.Senterpunkt["fields"] = response.fields;
     schema_cbrne.Senterpunkt["features"] = features;
   
     $.post(url,schema_cbrne)
