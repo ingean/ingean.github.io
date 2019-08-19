@@ -10,7 +10,7 @@ function findStandby() {
   .done(response => {
     console.log('Submitted request for location allocation successfully')
     console.log('Check job status with: ');
-    console.log(url_locationAllocation + '/jobs/' + response.jobId + '?f=json');
+    console.log(url_locationAllocation + '/jobs/' + response.jobId + '?f=pjson');
     checkGPJob(url_locationAllocation, response.jobId);
   })
   .fail(error => {
@@ -24,17 +24,27 @@ function executePlume() {
   $.get(url_incident.url + '&outSR=25833')
   .done(response => {
     response = JSON.parse(response);
-    var url = url_plumeGP + '/submitJob';
     var features = replaceAttributes(response.features, {"objectid":1,"type": "Gass: Giftig 2", "beskrivelse": ""},25833);
     
-    //schema_cbrne.Senterpunkt["fields"] = response.fields;
     schema_cbrne.Senterpunkt["features"] = features;
+    schema_cbrne.Senterpunkt = JSON.stringify(schema_cbrne.Senterpunkt);
   
-    $.post(url,schema_cbrne)
-    .done(response => {
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": url_plumeGP + '/submitJob?f=json',
+      "method": "POST",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded",
+        "accept": "application/json"
+      },
+      "data": schema_cbrne
+    }
+  
+    $.ajax(settings).done(response => {
       console.log('Submitted request for plume successfully')
       console.log('Check job status with: ');
-      console.log(url_plumeGP + '/jobs/' + response.jobId + '?f=json');
+      console.log(url_plumeGP + '/jobs/' + response.jobId + '?f=pjson');
       checkGPJob(url_plumeGP, response.jobId);
     })
     .fail(error => {
@@ -61,7 +71,7 @@ function startSimulation(features) {
   .done(response => {
     console.log('Submitted request for starting simulation successfully')
     console.log('Check job status with: ');
-    console.log(url_simulator + '/jobs/' + response.jobId + '?f=json');
+    console.log(url_simulator + '/jobs/' + response.jobId + '?f=pjson');
     checkGPJob(url_simulator, response.jobId);
   })
   .fail(error => {

@@ -124,7 +124,7 @@ function vehicleRouting(data, minTime) {
   $.ajax(settings).done(response => {
     console.log('VRP job submitted successfully');
     console.log('Check job status with: ');
-    console.log(url_VRP + '/jobs/' + response.jobId + '?f=json&token=' + TOKEN);
+    console.log(url_VRP + '/jobs/' + response.jobId + '?f=pjson&token=' + TOKEN);
     checkVRPJob(response.jobId);
   })
   .fail(error => {
@@ -214,7 +214,7 @@ function routesFieldMapping(inRoutes, routeType) {
   for(var i = 0; i < inRoutes.length; i++) {
     var attributes = {
       "OBJECTID": inRoutes[i].attributes.ObjectId,
-      "Name":inRoutes[i].attributes.Name,
+      "Name":inRoutes[i].attributes.Name.split(' - ')[0],
       "StartTime":inRoutes[i].attributes.StartTime,
       "EndTime":inRoutes[i].attributes.EndTime,
       "StartTimeUTC":inRoutes[i].attributes.StartTimeUTC,
