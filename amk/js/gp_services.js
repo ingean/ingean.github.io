@@ -26,8 +26,22 @@ function executePlume() {
     response = JSON.parse(response);
     var features = replaceAttributes(response.features, {"objectid":1,"type": "Gass: Giftig 2", "beskrivelse": ""},25833);
     
-    schema_cbrne.Senterpunkt["features"] = features;
-    schema_cbrne.Senterpunkt = JSON.stringify(schema_cbrne.Senterpunkt);
+    var cbrne_point = {
+      "fields": schema_cbrne.fields,
+      "features": features,
+      "geometryType": "esriGeometryPoint",
+      "sr":{"wkid":25833,"latestWkid":25833}
+    }
+
+    var cbrne_input = {
+      "env:outSR": 25833,
+      "Senterpunkt": JSON.stringify(cbrne_point),
+      "Vind_fra_YR_no": schema_cbrne.geometryType,
+      "Brukerdefinert_vindretning": "NE",
+      "Brukerdefinert_vindstyrke": 15,
+      "Beskrivelse": $('#select-plume-type').val(),
+      "Slett_gamle_soner": true
+    };
   
     var settings = {
       "async": true,
@@ -38,7 +52,7 @@ function executePlume() {
         "content-type": "application/x-www-form-urlencoded",
         "accept": "application/json"
       },
-      "data": schema_cbrne
+      "data": cbrne_input
     }
   
     $.ajax(settings).done(response => {

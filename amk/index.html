@@ -37,16 +37,25 @@
       </ul>
       
       <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
+        <div id="home" class="tab-pane in active">
           <h3>Finn nærmeste</h3>
           <p>Finner nærmeste ambulanse(r) til hendelse</p>
-          <button id="btn-findClosest" type="button" class="btn btn-primary" onclick="findClosest()">Finn nærmeste</button>
+          <label class="my-1 mr-2" for="input-facilityCount">Finn</label>
           <input id="input-facilityCount" class="input-number" type="number" min="1" max="10" value="3">
           <label class="my-1 mr-2" for="input-facilityCount">ambulanser</label>
+          <button id="btn-findClosest" type="button" class="btn btn-primary" onclick="findClosest()">Finn nærmeste</button>
         </div>
         <div id="menu1" class="tab-pane fade">
           <h3>Stedsanalyse</h3>
           <p>Lager hot, warm og cold zone rundt en hendelse basert på forskriften fra DSB.</p>
+          <div class="form-group">
+            <label for="select-plume-type">Utslippstype:</label>
+            <select class="form-control" id="select-plume-type">
+              <option>Gass: Stort utslipp (brudd på rør)</option>
+              <option>Stoff/Flytende: Farlig område i startfase</option>
+              <option>Eksplosiver: I dekning (trykkbølge)</option>
+            </select>
+          </div>
           <button id="btn-createPlumes" type="button" class="btn btn-primary" onclick="executePlume()"> 
             Lag sikkerhetssoner
           </button>
@@ -67,8 +76,10 @@
           <label class="my-1 mr-2" for="btn-dispatchStandby">min. unna en standbylokasjon</label -->
         </div>
       </div>
-      <label class="my-1 mr-2" for="input-date">Tid for analyse</label>
-      <input id="input-date" type="datetime-local">
+    </div>
+    <div class="footer container">
+        <label class="my-1 mr-2" for="input-date"></label>
+        <input id="input-date" type="datetime-local">  
     </div>
 </body>
 </html> 

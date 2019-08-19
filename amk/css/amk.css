@@ -16,8 +16,17 @@
   text-align: left;
   font-weight: bold;
   font-size: large;
+  background-color: lightgrey;
+  color: darkgray;
 }
 
 .vertical-align-bottom {
   vertical-align: bottom;
+}
+
+.footer {
+  margin-top: 10px;
+  background-color: lightgrey;
+  border: 1em;
+  border-color: darkgray;
 }
