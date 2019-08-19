@@ -129,10 +129,7 @@ function vehicleRouting(data, minTime) {
   })
   .fail(error => {
     console.log('Failed to submit job to allocate facilities to incidents: ' + error);
-    $.notify({
-      message: "Failed to allocate facilities to incidents",
-      type: "danger"
-    });
+    showError('Failed to submit job to allocate facilities to incidents');
   });
 }
 
@@ -250,4 +247,35 @@ function replaceAttributes(features, attributes, wkid) {
     features[i].geometry["spatialReference"] = {"wkid":wkid,"latestWkid":wkid};
   }
   return features;
+}
+
+function resetResources() {
+  console.log('Resetting ambulances to start position and status');
+  var data = {
+    "f":"json",
+    "features": JSON.stringify(init_amb)
+  };
+
+  var url = url_resources.url.substr(0, url_resources.url.indexOf('/query?'));
+  
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": url + '/updateFeatures',
+    "method": "POST",
+    "headers": {
+      "content-type": "application/x-www-form-urlencoded",
+      "accept": "application/json"
+    },
+    "data": data
+  }
+
+  $.ajax(settings).done(response => {
+    console.log('Resource positions and status are reset');
+    showError('Resource positions and status are reset','info');
+  })
+  .fail(error => {
+    console.log('Failed to reset resources: ' + error);
+    showError('Failed to reset resources');
+  });
 }

@@ -34,3 +34,9 @@
 .tab-pane {
   height: 230px;
 }
+
+#img-reset {
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.5;
+}

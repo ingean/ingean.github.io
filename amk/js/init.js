@@ -1,5 +1,6 @@
 $(function(){
   getToken();
+  resetResources();
   $("#input-date").val(moment().format('YYYY-MM-DDTHH:00'));
 })
 
