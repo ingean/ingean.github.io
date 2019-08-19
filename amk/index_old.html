@@ -29,46 +29,43 @@
   </head>
   <body>
     <div class="container">
-      <ul class="nav nav-tabs">
-        <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#home">1</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu1">2</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu2">3</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu3">4</a></li>
-      </ul>
-      
-      <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
-          <h3>Finn nærmeste</h3>
-          <p>Finner nærmeste ambulanse(r) til hendelse</p>
+      <div class="row">
+        <div class="col-xs">
+          <input id="input-date" type="datetime-local">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+          <!--label class="my-1 mr-2" for="input-facilityCount">Finn nærmeste</label-->
           <button id="btn-findClosest" type="button" class="btn btn-primary" onclick="findClosest()">Finn nærmeste</button>
           <input id="input-facilityCount" class="input-number" type="number" min="1" max="10" value="3">
           <label class="my-1 mr-2" for="input-facilityCount">ambulanser</label>
         </div>
-        <div id="menu1" class="tab-pane fade">
-          <h3>Stedsanalyse</h3>
-          <p>Lager hot, warm og cold zone rundt en hendelse basert på forskriften fra DSB.</p>
-          <button id="btn-createPlumes" type="button" class="btn btn-primary" onclick="executePlume()"> 
-            Lag sikkerhetssoner
-          </button>
-        </div>
-        <div id="menu2" class="tab-pane fade">
-          <h3>Beredskapspunkter</h3>
-          <p>Finner hvor ledige ambulanser bør stå for å minimere kjøretiden til befolkningen.</p>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+          <!--label class="my-1 mr-2" for="btn-findStandby">Finn standbylokasjoner</label-->
           <button id="btn-findStandby" type="button" class="btn btn-primary" onclick="findStandby()"> 
             Finn beredskapspunkter
           </button>
         </div>
-        <div id="menu3" class="tab-pane fade">
-          <h3>Forflytning</h3>
-          <p>Optimaliserer hvilke ambulanser som rykker ut til hvilke beredskapspunkter for å minimere total kjøretid, samt starter forflytningen.</p>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+          <!--label class="my-1 mr-2" for="input-minCutOff">Forflytte ambulanser mer enn</label-->
           <button id="btn-dispatchStandby" type="button" class="btn btn-primary" onclick="dispatchStandby()">Forflytte ambulanser</button>
-          <!--label class="my-1 mr-2" for="btn-dispatchStandby">mer enn</label>
+          <label class="my-1 mr-2" for="btn-dispatchStandby">mer enn</label>
           <input id="input-minCutOff" class="input-number" type="number" min="0" max="1" value="0">
-          <label class="my-1 mr-2" for="btn-dispatchStandby">min. unna en standbylokasjon</label -->
+          <label class="my-1 mr-2" for="btn-dispatchStandby">min. unna en standbylokasjon</label>
         </div>
       </div>
-      <label class="my-1 mr-2" for="input-date">Tid for analyse</label>
-      <input id="input-date" type="datetime-local">
+      <div class="row">
+        <div class="col-xs">
+          <button id="btn-createPlumes" type="button" class="btn btn-primary" onclick="executePlume()"> 
+            Lag sikkerhetssoner
+          </button>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html> 
