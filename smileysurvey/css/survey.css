@@ -1,0 +1,12 @@
+.img-btn {
+  cursor: pointer;  
+}
+
+.img-btn:active {
+  opacity: 0.8;    
+}
+
+.survey-title {
+  text-align: center;
+  font-size: 5em;
+}
