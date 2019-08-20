@@ -1,24 +1,23 @@
-var CFparams = {
-  "f":"json",
-  "polygonBarriers": JSON.stringify(url_barriers),
-  "returnDirections":false,
-  "returnCFRoutes":true,
-  "travelDirection": "esriNATravelDirectionFromFacility",
-  "timeOfDay": 0,
-  "impedance": "TravelTime",
-  "outSR": 25833
-};
-
 function findClosest() {
   btnSpinner(true, '#btn-findClosest');
   deleteAllFeatures(url_routes, 'routes');
-  CFparams.token = TOKEN;
-  CFparams.facilities = JSON.stringify(url_resources);
-  CFparams.incidents = JSON.stringify(incidentsList[0]);
-  CFparams.defaultTargetFacilityCount = $('#input-facilityCount').val();
-  CFparams.timeOfDay = moment($('#input-date').val()).unix();
   
-  executeClosestFacility(CFparams, 0);
+  var params = {
+    "f": "json",
+    "token": TOKEN,
+    "facilities": JSON.stringify(url_resources),
+    "incidents": JSON.stringify(incidentsList[0]),
+    "polygonBarriers": JSON.stringify(url_barriers),
+    "returnDirections":false,
+    "returnCFRoutes":true,
+    "travelDirection": "esriNATravelDirectionFromFacility",
+    "impedance": "TravelTime",
+    "defaultTargetFacilityCount": $('#input-facilityCount').val(),
+    "timeOfDay": moment($('#input-date').val()).unix(),
+    "outSR": 25833
+  };  
+  
+  executeClosestFacility(params, 0);
 }
 
 function executeClosestFacility(data) {
