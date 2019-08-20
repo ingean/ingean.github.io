@@ -24,7 +24,8 @@ function executePlume() {
   $.get(url_incident.url + '&outSR=25833')
   .done(response => {
     response = JSON.parse(response);
-    var features = replaceAttributes(response.features, {"objectid":1,"type": "Gass: Giftig 2", "beskrivelse": ""},25833);
+    var name = response.features[0].attributes.name;
+    var features = replaceAttributes(response.features, {"objectid":1,"type": "Gass: Giftig 2", "beskrivelse": "","name":name},25833);
     
     var cbrne_point = {
       "fields": schema_cbrne.fields,
