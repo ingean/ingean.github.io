@@ -28,8 +28,8 @@
     <script type="text/javascript" src="js/arcgis_api.js"></script>
     <script type="text/javascript" src="js/amk.js"></script>
     <script type="text/javascript" src="js/gp.js"></script>
-    <script type="text/javascript" src="js/na_cf.js"></script>
-    <script type="text/javascript" src="js/na_vrp.js"></script>
+    <script type="text/javascript" src="js/na/cf.js"></script>
+    <script type="text/javascript" src="js/na/vrp.js"></script>
   </head>
   <body>
     <div class="container">
@@ -85,6 +85,22 @@
           <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="switch-useBarriers">
             <label class="custom-control-label" for="switch-useBarriers">Bruk barrierer</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="switch-liveTraffic">
+            <label class="custom-control-label" for="switch-liveTraffic">Bruk live trafikk</label>
+          </div>          
+          <div class="form-group">
+            <label for="select-weekday">Ukedag:</label>
+            <select class="form-control" id="select-weekday">
+              <option>Mandag</option>
+              <option>Tirsdag</option>
+              <option>Onsdag</option>
+              <option>Torsdag</option>
+              <option>Fredag</option>
+              <option>Lørdag</option>
+              <option>Søndag</option>
+            </select>
           </div>
         </div>
       </div>

@@ -3,6 +3,16 @@ const incidentsList = [url_incident, url_standby];
 const url_barriers = [url_barriersPoints, url_barriersLines, url_barriersPolygons];
 const params_barriers = ['barriers','polylineBarriers','polygonBarriers'];
 
+const historicTimes = {
+  "Mandag": "01.01.1990",
+  "Tirsdag": "02.01.1990",
+  "Onsdag": "03.01.1990",
+  "Torsdag": "04.01.1990",
+  "Fredag": "05.01.1990",
+  "Lørdag": "06.01.1990",
+  "Søndag": "07.01.1990"
+};
+
 function cutoffRoutes(allRoutes, cutoff) {
   if(cutoff > 0) {
     var routes = [];
@@ -114,6 +124,19 @@ function addBarriers(params) {
     }
   })
   
+}
+
+function addTimeofDay(params, timekey = 'timeOfDay') {
+  if($("#switch-liveTraffic").is(':checked')) {
+    params[timekey] = moment($('#input-date').val()).unix();
+    return params;
+  } else {
+    var timestring = moment(historicTimes[$('#select-weekday').val()],'DD.MM.YYYY').format('DD.MM.YYYY') + 
+                    'T' + 
+                    moment($('#input-date').val()).format('HH:00:00'); 
+    params[timekey] = moment(timestring,'DD.MM.YYYYTHH:mm:ss').unix();
+    return params;
+  }
 }
 
 function removeUrlQuery(url) {

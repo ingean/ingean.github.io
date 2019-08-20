@@ -12,8 +12,9 @@ function dispatchStandby() {
       "routes": JSON.stringify(routes),
       "impedance": "TravelTime",
       "env:outSR": 25833,
-      "default_date": moment(moment($('#input-date').val()).format('YYYY-MM-DD')).unix()
     };
+
+    params = addTimeofDay(params, 'default_date');
 
     addBarriers(params)
     .then(params => {

@@ -12,9 +12,10 @@ function findClosest() {
     "travelDirection": "esriNATravelDirectionFromFacility",
     "impedanceAttributeName": "TravelTime",
     "defaultTargetFacilityCount": $('#input-facilityCount').val(),
-    "timeOfDay": moment($('#input-date').val()).unix(),
     "outSR": 25833
-  };  
+  };
+  
+  params = addTimeofDay(params);
 
   addBarriers(params)
   .then(params => {
