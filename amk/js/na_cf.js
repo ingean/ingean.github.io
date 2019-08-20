@@ -10,7 +10,7 @@ function findClosest() {
     "returnDirections":false,
     "returnCFRoutes":true,
     "travelDirection": "esriNATravelDirectionFromFacility",
-    "impedance": "TravelTime",
+    "impedanceAttributeName": "TravelTime",
     "defaultTargetFacilityCount": $('#input-facilityCount').val(),
     "timeOfDay": moment($('#input-date').val()).unix(),
     "outSR": 25833
