@@ -27,8 +27,7 @@ function dispatchStandby() {
 function submitVRP(data, minTime) {
   $.post(url_VRP + '/submitJob', data)
   .done(response => {
-    console.log('VRP job submitted successfully');
-    console.log('Check job status with: ');
+    console.log('VRP job submitted successfully, check job status:');
     console.log(url_VRP + '/jobs/' + response.jobId + '?f=pjson&token=' + TOKEN);
     checkVRPJob(response.jobId);
   })

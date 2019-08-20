@@ -8,8 +8,7 @@ function findStandby() {
 
  $.get(url)
   .done(response => {
-    console.log('Submitted request for location allocation successfully')
-    console.log('Check job status with: ');
+    console.log('Submitted request for location allocation successfully, check job status:');
     console.log(url_locationAllocation + '/jobs/' + response.jobId + '?f=pjson');
     checkGPJob(url_locationAllocation, response.jobId);
   })
@@ -44,21 +43,9 @@ function executePlume() {
       "Slett_gamle_soner": true
     };
   
-    var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": url_plumeGP + '/submitJob?f=json',
-      "method": "POST",
-      "headers": {
-        "content-type": "application/x-www-form-urlencoded",
-        "accept": "application/json"
-      },
-      "data": cbrne_input
-    }
-  
-    $.ajax(settings).done(response => {
-      console.log('Submitted request for plume successfully')
-      console.log('Check job status with: ');
+    $.post(url_plumeGP + '/submitJob?f=json', cbrne_input)
+    .done(response => {
+      console.log('Submitted request for plume successfully, check job status: ');
       console.log(url_plumeGP + '/jobs/' + response.jobId + '?f=pjson');
       checkGPJob(url_plumeGP, response.jobId);
     })
@@ -76,16 +63,15 @@ function startSimulation(features) {
     "Hastighet": hastighet,
     "Linjer":JSON.stringify({
       "fields": schema_routes.fields,
-      "geometryType": schema_routes.geometryType,
+      "geometryType": "esriGeometryPoint",
       "features": features,
-      "sr": schema_routes.sr
+      "sr": JSON.stringify({"wkid":25833,"latestWkid":25833})
     })
   }; 
 
   $.post(url,data)
   .done(response => {
-    console.log('Submitted request for starting simulation successfully')
-    console.log('Check job status with: ');
+    console.log('Submitted request for starting simulation successfully, check job status:');
     console.log(url_simulator + '/jobs/' + response.jobId + '?f=pjson');
     checkGPJob(url_simulator, response.jobId);
   })
