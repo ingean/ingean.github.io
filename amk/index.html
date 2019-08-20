@@ -37,6 +37,7 @@
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu1">2</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu2">3</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu3">4</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu4"><img src="images/settings.png" id="img-settings" class="img-tool" /></a></li>
       </ul>
       
       <div class="tab-content">
@@ -74,16 +75,22 @@
           <h3>Forflytning</h3>
           <p>Optimaliserer hvilke ambulanser som rykker ut til hvilke beredskapspunkter for å minimere total kjøretid, samt starter forflytningen.</p>
           <button id="btn-dispatchStandby" type="button" class="btn btn-primary" onclick="dispatchStandby()">Forflytte ambulanser</button>
-          <!--label class="my-1 mr-2" for="btn-dispatchStandby">mer enn</label>
-          <input id="input-minCutOff" class="input-number" type="number" min="0" max="1" value="0">
-          <label class="my-1 mr-2" for="btn-dispatchStandby">min. unna en standbylokasjon</label -->
+        </div>
+        <div id="menu4" class="tab-pane fade">
+          <h3>Innstillinger</h3>
+          <label class="my-1 mr-2" for="input-simulationSpeed">Simulatorhastighet</label>
+          <input id="input-simulationSpeed" class="input-number" type="number" min="10" max="1000" value="100">
+          <label class="my-1 mr-2" for="input-simulationSpeed">m/s</label>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="switch-useBarriers">
+            <label class="custom-control-label" for="switch-useBarriers">Bruk barrierer</label>
+          </div>
         </div>
       </div>
     </div>
     <div class="footer container">
-        <label class="my-1 mr-2" for="input-date"></label>
         <input id="input-date" type="datetime-local">
-        <img src="images/refresh.png" id="img-reset" class="pull-right" onclick="resetDemo()" > 
+        <img src="images/refresh.png" id="img-reset" class="img-tool pull-right" onclick="resetDemo()" > 
     </div>
 </body>
 </html> 

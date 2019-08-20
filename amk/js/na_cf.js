@@ -7,7 +7,6 @@ function findClosest() {
     "token": TOKEN,
     "facilities": JSON.stringify(url_resources),
     "incidents": JSON.stringify(incidentsList[0]),
-    "polygonBarriers": JSON.stringify(url_barriers),
     "returnDirections":false,
     "returnCFRoutes":true,
     "travelDirection": "esriNATravelDirectionFromFacility",
@@ -16,8 +15,11 @@ function findClosest() {
     "timeOfDay": moment($('#input-date').val()).unix(),
     "outSR": 25833
   };  
-  
-  executeClosestFacility(params, 0);
+
+  addBarriers(params)
+  .then(params => {
+    executeClosestFacility(params);  
+  })
 }
 
 function executeClosestFacility(data) {

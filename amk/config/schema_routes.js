@@ -205,7 +205,18 @@ var schema_routes = {
       "defaultValue":null,
       "description":null,
       "domain":null
-   }
+   },
+   {
+    "name":"Destination",
+    "type":"esriFieldTypeString",
+    "alias":"Oppdragstype",
+    "length":1000,
+    "editable":true,
+    "nullable":true,
+    "defaultValue":null,
+    "description":null,
+    "domain":null
+ }
   ],
   "geometryType":"esriGeometryPolyline",
   "sr":{

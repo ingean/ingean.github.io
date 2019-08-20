@@ -65,7 +65,7 @@ function startSimulation(features) {
       "fields": schema_routes.fields,
       "geometryType": "esriGeometryPoint",
       "features": features,
-      "sr": JSON.stringify({"wkid":25833,"latestWkid":25833})
+      "sr": {"wkid":25833,"latestWkid":25833}
     })
   }; 
 
@@ -92,7 +92,7 @@ function checkGPJob(url_GPservice, jobId, freq = 5000, maxQueries = 50) {
         }, freq);
       } else if(response.jobStatus === 'esriJobFailed') {
         btnSpinner(false);
-        console.log('GP-tool failed with the following messages: ' + response.messages);
+        console.log('GP-tool failed with the following messages: ' + JSON.stringify(response.messages));
         showError('Failed to run GP-tool');
       } else {
         btnSpinner(false);
