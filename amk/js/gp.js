@@ -60,7 +60,7 @@ function startSimulation(features) {
   var url = url_simulator + '/submitJob';
   var data = {
     "f":"json",
-    "Hastighet": hastighet,
+    "Hastighet": $("#input-simulationSpeed").val(),
     "Linjer":JSON.stringify({
       "fields": schema_routes.fields,
       "geometryType": "esriGeometryPoint",

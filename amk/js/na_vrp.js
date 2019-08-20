@@ -1,22 +1,26 @@
-var VRPparams = {
-  "f":"json",
-  "polygonBarriers": JSON.stringify(url_barriers),
-  "orders": JSON.stringify(incidentsList[1]),
-  "depots": JSON.stringify(url_resources),
-  "impedance": "TravelTime",
-  "env:outSR": 25833
-};
-
 function dispatchStandby() {
   btnSpinner(true, '#btn-dispatchStandby');
   deleteAllFeatures(url_routes, 'routes');
   
   createVRPRoutes(url_resources.url)
   .then(routes => {
-    VRPparams.token = TOKEN;
-    VRPparams["routes"] = JSON.stringify(routes);
-    VRPparams["default_date"] = moment(moment($('#input-date').val()).format('YYYY-MM-DD')).unix();
-    submitVRP(VRPparams, $('#input-minCutOff').val());
+    var params = {
+      "f":"json",
+      "token": TOKEN,
+      "orders": JSON.stringify(incidentsList[1]),
+      "depots": JSON.stringify(url_resources),
+      "routes": JSON.stringify(routes),
+      "impedance": "TravelTime",
+      "env:outSR": 25833,
+      "default_date": moment(moment($('#input-date').val()).format('YYYY-MM-DD')).unix()
+    };
+
+    addBarriers(params)
+    .then(params => {
+      submitVRP(params);
+    })
+
+    
   })
   .catch(error => {
     console.log('Not able to get features to make routes: ' + error);
@@ -24,7 +28,7 @@ function dispatchStandby() {
   })
 }
 
-function submitVRP(data, minTime) {
+function submitVRP(data) {
   $.post(url_VRP + '/submitJob', data)
   .done(response => {
     console.log('VRP job submitted successfully, check job status:');
