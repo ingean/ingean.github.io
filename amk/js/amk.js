@@ -1,68 +1,18 @@
 var TOKEN = '';
 const incidentsList = [url_incident, url_standby];
 
-var CFparams = {
-  "f":"json",
-  "polygonBarriers": JSON.stringify(url_barriers),
-  "returnDirections":false,
-  "returnCFRoutes":true,
-  "travelDirection": "esriNATravelDirectionFromFacility",
-  "timeOfDay": 0,
-  "impedance": "TravelTime",
-  "outSR": 25833
-};
-
-var VRPparams = {
-  "f":"json",
-  "polygonBarriers": JSON.stringify(url_barriers),
-  "orders": JSON.stringify(incidentsList[1]),
-  "depots": JSON.stringify(url_resources),
-  "impedance": "TravelTime",
-  "env:outSR": 25833
-};
-
-function findClosest() {
-  btnSpinner(true, '#btn-findClosest');
-  deleteExistingRoutes();
-  CFparams.token = TOKEN;
-  CFparams.facilities = JSON.stringify(url_resources);
-  CFparams.incidents = JSON.stringify(incidentsList[0]);
-  CFparams.defaultTargetFacilityCount = $('#input-facilityCount').val();
-  CFparams.timeOfDay = moment($('#input-date').val()).unix();
-  
-  closestFacility(CFparams, 0);
-}
-
-function dispatchStandby() {
-  btnSpinner(true, '#btn-dispatchStandby');
-  deleteExistingRoutes();
-  
-  createRoutes(url_resources.url)
-  .then(routes => {
-    VRPparams.token = TOKEN;
-    VRPparams["routes"] = JSON.stringify(routes);
-    VRPparams["default_date"] = moment(moment($('#input-date').val()).format('YYYY-MM-DD')).unix();
-    vehicleRouting(VRPparams, $('#input-minCutOff').val());
-  })
-  .catch(error => {
-    console.log('Not able to get features to make routes: ' + error);
-    showError('Not able to get features to make routes');
-  })
-}
-
-function deleteExistingRoutes() {
+function deleteAllFeatures(url, featurename = 'features') {
   var data = {
     "where":"1=1"
   };
   
-  var deletedFeatures = $.post(url_routes + '/deleteFeatures', data);
-  deletedFeatures
+  $.post(url + '/deleteFeatures', data)
   .done(response => {
-    console.log('All existing routes deleted');
+    console.log('All existing ' + featurename + ' deleted');
   })
   .fail(error => {
-    console.log('Failed to delete all existing routes: ' + error);
-    showError('Failed to delete all existing routes');
+    console.log('Failed to delete all ' + featurename + ' :' + error);
+    showError('Failed to delete all ' + featurename);
   })
 }
 
@@ -71,8 +21,7 @@ function addFeatures(url, features) {
     "features":JSON.stringify(features),
   };
 
-  var addingFeatures =  $.post(url + '/addFeatures', data)
-  addingFeatures
+  $.post(url + '/addFeatures', data)
   .done(response => {
     btnSpinner(false);
     console.log('Features added successfully');
@@ -95,115 +44,12 @@ function cutoffRoutes(allRoutes, cutoff) {
   }
 }
 
-function closestFacility(data) {
-  $.post(url_closestFacility, data)
-  .done(response => {
-    addFeatures(url_routes, response.routes.features);
-    var routes = routesFieldMapping(response.routes.features,'Rykker ut');
-    startSimulation(routes);
-  })
-  .fail(error => {
-    console.log('Failed to find closest facilities: ' + error);
-    showError('Failed to find closest facilities');
-  })  
-}
-
-function vehicleRouting(data, minTime) {
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": url_VRP + '/submitJob',
-    "method": "POST",
-    "headers": {
-      "content-type": "application/x-www-form-urlencoded",
-      "accept": "application/json"
-    },
-    "data": data
-  }
-
-  $.ajax(settings).done(response => {
-    console.log('VRP job submitted successfully');
-    console.log('Check job status with: ');
-    console.log(url_VRP + '/jobs/' + response.jobId + '?f=pjson&token=' + TOKEN);
-    checkVRPJob(response.jobId);
-  })
-  .fail(error => {
-    console.log('Failed to submit job to allocate facilities to incidents: ' + error);
-    showError('Failed to submit job to allocate facilities to incidents');
-  });
-}
-
 function btnSpinner(activate, btnID) {
   if(activate === true) {
     $(btnID).append('<span id="spinner-loading" class="spinner-border spinner-border-sm"></span>');
   } else {
     $('#spinner-loading').remove();
   }
-}
-
-function checkVRPJob(jobId, freq = 5000, maxQueries = 50) {
-  var url = url_VRP + '/jobs/' + jobId; 
-  if(maxQueries > 0) {
-    $.get(url + '?f=json&token=' + TOKEN)
-    .done(response => {
-      if(response.jobStatus !== 'esriJobSucceeded' && response.jobStatus !== 'esriJobFailed') {
-        setTimeout(() => {
-          checkVRPJob(jobId, freq, maxQueries - 1);
-        }, freq);
-      } else if(response.jobStatus === 'esriJobFailed') {
-        btnSpinner(false);
-        console.log('VRP failed with the following messages: ' + response.messages);
-        showError('Failed to allocate resources to standby points');
-      } else {
-        btnSpinner(false);
-        getVRPRoutes(url, response.results.out_routes.paramUrl);
-      }
-    })
-    .fail(error => {
-      console.log('Failed to get job status: ' + error);
-    })
-  } else {
-    console.log('GP tool timed out');
-    btnSpinner(false);
-  }
-}
-
-function createRoutes(url) {
-  return new Promise((resolve, reject) => {
-    $.get(url)
-    .done(response => {
-      var features = response.features;
-      var routes = [];
-      
-      for(var i = 0; i< features.length; i++) {
-        var route = {
-          "attributes": {
-            "Name": features[i].attributes.name,
-            "MaxOrderCount":1,
-            "StartDepotName": features[i].attributes.name,
-          }
-        }
-        routes.push(route);
-      }
-      resolve({"features": routes});
-    })
-    .fail(error => {
-      reject(error);
-    })  
-  })
-}
-
-function getVRPRoutes(url_job, url_results_routes) {
-  $.get(url_job + '/' + url_results_routes + '?f=json&token=' + TOKEN)
-  .done(response => {
-    var routes = routesFieldMapping(response.value.features,'Omplassering');
-    addFeatures(url_routes, routes);
-    startSimulation(routes);
-  })
-  .fail(error => {
-    console.log('Failed to get routes from VRP result');
-    showError('Failed to get routes from VRP result');
-  })
 }
 
 function routesFieldMapping(inRoutes, routeType) {
@@ -256,21 +102,10 @@ function resetResources() {
     "features": JSON.stringify(init_amb)
   };
 
+  //Get baseurl for feature service
   var url = url_resources.url.substr(0, url_resources.url.indexOf('/query?'));
   
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": url + '/updateFeatures',
-    "method": "POST",
-    "headers": {
-      "content-type": "application/x-www-form-urlencoded",
-      "accept": "application/json"
-    },
-    "data": data
-  }
-
-  $.ajax(settings).done(response => {
+  $.post(url,data).done(response => {
     console.log('Resource positions and status are reset');
     showError('Resource positions and status are reset','info');
   })

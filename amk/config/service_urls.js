@@ -27,4 +27,7 @@ const hastighet = 100;
 //Plume tool
 const url_plumeGP = 'https://demo01.geodata.no/arcgis/rest/services/GP_Tjenester/CBRNE_Tool/GPServer/PlumeTool';
 
+//Geoevent messages (Geofencing etc.)
+const url_messages = 'https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/AMK_barriers/FeatureServer/3';
+
 

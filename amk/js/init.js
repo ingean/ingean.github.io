@@ -1,7 +1,6 @@
 $(function(){
   getToken();
-  resetResources();
-  $("#input-date").val(moment().format('YYYY-MM-DDTHH:00'));
+  resetDemo();
 })
 
 function getToken(){
@@ -24,5 +23,12 @@ function getToken(){
   $.ajax(settings).done(function (response) {
     TOKEN = JSON.parse(response).access_token;
   });
+}
+
+function resetDemo() {
+  $("#input-date").val(moment().format('YYYY-MM-DDTHH:00'));
+  resetResources();
+  deleteAllFeatures(url_routes, 'routes');
+  deleteAllFeatures(url_messages, 'messages');
 }
 
