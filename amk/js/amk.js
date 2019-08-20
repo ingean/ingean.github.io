@@ -64,7 +64,8 @@ function routesFieldMapping(inRoutes, routeType) {
       "EndTimeUTC":inRoutes[i].attributes.EndTimeUTC,
       "Total_TravelTime":inRoutes[i].attributes.TotalTravelTime,
       "Total_Kilometers":inRoutes[i].attributes.TotalDistance,
-      "RouteType":routeType
+      "RouteType":routeType,
+      "Destination":inRoutes[i].attributes.Name.split(' - ')[1],
     };
     inRoutes[i].attributes = attributes;
     outRoutes.push(inRoutes[i]);

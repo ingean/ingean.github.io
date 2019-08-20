@@ -9,7 +9,7 @@ var VRPparams = {
 
 function dispatchStandby() {
   btnSpinner(true, '#btn-dispatchStandby');
-  deleteAllFeatures(url_routes), 'routes';
+  deleteAllFeatures(url_routes, 'routes');
   
   createVRPRoutes(url_resources.url)
   .then(routes => {
