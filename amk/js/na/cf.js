@@ -27,7 +27,7 @@ function executeClosestFacility(data) {
   $.post(url_closestFacility, data)
   .done(response => {
     addFeatures(url_routes, response.routes.features);
-    var routes = routesFieldMapping(response.routes.features,'Rykker ut');
+    var routes = appendToRoutes(response.routes.features,'Rykker ut');
     startSimulation(routes);
   })
   .fail(error => {

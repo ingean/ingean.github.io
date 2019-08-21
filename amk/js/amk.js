@@ -54,6 +54,16 @@ function routesFieldMapping(inRoutes, routeType) {
   return outRoutes;
 }
 
+function appendToRoutes(routes, routeType) {
+  for(var i = 0; i < routes.length; i++) {
+    routes[i].attributes["Name"] = routes[i].attributes.Name.split(' - ')[0];
+    routes[i].attributes["RouteType"] = routeType;
+    routes[i].attributes["Destination"] = routes[i].attributes.Name.split(' - ')[1]; 
+  }
+  return routes;
+}
+
+
 function showError(message, type= 'danger') {
   $.notify({
     message: message,

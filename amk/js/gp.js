@@ -62,10 +62,23 @@ function startSimulation(features) {
     "f":"json",
     "Hastighet": $("#input-simulationSpeed").val(),
     "Linjer":JSON.stringify({
+      "objectIdFieldName" : "OBJECTID", 
+      "uniqueIdField" : {
+        "name" : "OBJECTID", 
+        "isSystemMaintained" : true
+      }, 
+      "globalIdFieldName" : "", 
+      "geometryProperties" : {
+        "shapeLengthFieldName" : "Shape__Length", 
+        "units" : "esriMeters"
+      }, 
+      "geometryType" : "esriGeometryPolyline", 
+      "spatialReference" : {
+        "wkid" : 25833, 
+        "latestWkid" : 25833
+      }, 
       "fields": schema_routes.fields,
-      "geometryType": "esriGeometryPoint",
-      "features": features,
-      "sr": {"wkid":25833,"latestWkid":25833}
+      "features": features
     })
   }; 
 
