@@ -26,8 +26,8 @@ function findClosest() {
 function executeClosestFacility(data) {
   $.post(url_closestFacility, data)
   .done(response => {
-    addFeatures(url_routes, response.routes.features);
     var routes = appendToRoutes(response.routes.features,'Rykker ut');
+    addFeatures(url_routes, routes);
     startSimulation(routes);
   })
   .fail(error => {
