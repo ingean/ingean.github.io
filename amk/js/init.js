@@ -7,7 +7,6 @@ function init() {
   resetDemo();
   getRoutesSchema();
   getRoadBlockAreaSchema();
-  startResponseGrid();
 }
 
 function getToken(){

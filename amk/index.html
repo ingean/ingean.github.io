@@ -87,7 +87,10 @@
         <div id="menu5" class="tab-pane fade">
           <h3>Innstillinger</h3>
           <label class="my-1 mr-2" for="input-gridIterations">Beredskapsgrid</label>
-          <input id="input-gridIterations" class="input-number" type="number" min="10" max="100" value="5">
+          <input id="input-gridIterations" class="input-number" type="number" min="10" max="100" value="50">
+          <button id="btn-startResponseGrid" type="button" class="btn btn-primary" onclick="startResponseGrid()"> 
+            Start beredskapsgrid
+          </button>
           <label class="my-1 mr-2" for="input-gridIterations">iterasjoner</label>
           <label class="my-1 mr-2" for="input-simulationSpeed">Simulatorhastighet</label>
           <input id="input-simulationSpeed" class="input-number" type="number" min="10" max="1000" value="100">
@@ -117,8 +120,8 @@
     </div>
     <div class="footer container">
         <input id="input-date" type="datetime-local">
+        <span id="span-iterationCount" class="badge badge-success"></span>
         <img src="images/refresh.png" id="img-reset" class="img-tool pull-right" onclick="resetDemo()" >
-        <span id="span-iterationCount" class="badge badge-success pull-right"></span>
     </div>
 </body>
 </html> 
