@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Rasterfunksjoner i ArcGIS</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.12/esri/themes/light/main.css"
+    />
+    <link 
+      rel="stylesheet" 
+      type="text/css" 
+      href="css/rasterfunctions.css"
+    >
+    <script src="https://js.arcgis.com/4.12/"></script>
+    <script src="js/rasterfunctions.js"></script>
+  </head>
+
+  <body>
+    <div id="div-view"></div>
+    <div id="div-rasterfunctions-selector" class="esri-widget">
+      <b>Velg rasterfunksjon</b><br/>
+      <br />Funksjoner:
+      <div class="rasterfunctions-options">
+        <button
+          class="esri-widget--button rasterfunction-button"
+          id="button-rasterfunction-hillshade"
+          value="Grayscale_Hillshade"
+          title="Fjellskygge"
+        ></button>
+        <button
+          class="esri-widget--button rasterfunction-button"
+          id="button-rasterfunction-slope"
+          value="Slope_Degrees"
+          title="Helningsvinkel"
+        ></button>
+        <button
+          class="esri-widget--button rasterfunction-button"
+          id="button-rasterfunction-height"
+          value="Dynamic_Height"
+          title="Høyde over havet"
+        ></button>
+      </div>
+      <br />
+      <div class="tooltip">
+        <label for="slider-transparency">Gjennomsiktighet:</label>
+        <div id="slider-transparency"></div>
+      </div>
+      <br />
+    </div>
+  </body>
+</html>
