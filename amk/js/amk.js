@@ -56,9 +56,10 @@ function routesFieldMapping(inRoutes, routeType) {
 
 function appendToRoutes(routes, routeType) {
   for(var i = 0; i < routes.length; i++) {
-    routes[i].attributes["Name"] = routes[i].attributes.Name.split(' - ')[0];
+    var name = routes[i].attributes.Name.split(' - ');
+    routes[i].attributes["Name"] = name[0];
     routes[i].attributes["RouteType"] = routeType;
-    routes[i].attributes["Destination"] = routes[i].attributes.Name.split(' - ')[1]; 
+    routes[i].attributes["Destination"] = name[1]; 
   }
   return routes;
 }
@@ -94,8 +95,7 @@ function resetResources() {
     "features": JSON.stringify(init_amb)
   };
 
-  //Get baseurl for feature service
-  var url = removeUrlQuery(url_resources.url);
+  var url = removeUrlQuery(url_resources.url) + '/updateFeatures';
   
   $.post(url,data).done(response => {
     console.log('Resource positions and status are reset');
