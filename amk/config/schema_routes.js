@@ -195,7 +195,15 @@ var schema_routes = {
         "description":null,
         "domain":null
      },
-     {
+    {
+      "name" : "Shape__Length", 
+      "type" : "esriFieldTypeDouble", 
+      "alias" : "Shape__Length", 
+      "sqlType" : "sqlTypeDouble", 
+      "domain" : null, 
+      "defaultValue" : null
+    },
+    {
       "name":"RouteType",
       "type":"esriFieldTypeString",
       "alias":"Oppdragstype",
@@ -216,8 +224,8 @@ var schema_routes = {
     "defaultValue":null,
     "description":null,
     "domain":null
- }
-  ],
+  }
+  ], 
   "geometryType":"esriGeometryPolyline",
   "sr":{
      "wkid":25833,

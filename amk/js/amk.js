@@ -38,15 +38,15 @@ function routesFieldMapping(inRoutes, routeType) {
   for(var i = 0; i < inRoutes.length; i++) {
     var attributes = {
       "OBJECTID": inRoutes[i].attributes.ObjectID,
-      "Name":inRoutes[i].attributes.Name.split(' - ')[0],
-      "StartTime":inRoutes[i].attributes.StartTime,
-      "EndTime":inRoutes[i].attributes.EndTime,
-      "StartTimeUTC":inRoutes[i].attributes.StartTimeUTC,
-      "EndTimeUTC":inRoutes[i].attributes.EndTimeUTC,
-      "Total_TravelTime":inRoutes[i].attributes.TotalTravelTime,
-      "Total_Kilometers":inRoutes[i].attributes.TotalDistance,
-      "RouteType":routeType,
-      "Destination":inRoutes[i].attributes.Name.split(' - ')[1],
+      "Name": inRoutes[i].attributes.Name.split(' - ')[0],
+      "StartTime": inRoutes[i].attributes.StartTime,
+      "EndTime": inRoutes[i].attributes.EndTime,
+      "StartTimeUTC": inRoutes[i].attributes.StartTimeUTC,
+      "EndTimeUTC": inRoutes[i].attributes.EndTimeUTC,
+      "Total_TravelTime": inRoutes[i].attributes.TotalTravelTime,
+      "Total_Kilometers": inRoutes[i].attributes.TotalDistance,
+      "RouteType": routeType,
+      "Destination": inRoutes[i].attributes.Name.split(' - ')[1],
     };
     inRoutes[i].attributes = attributes;
     outRoutes.push(inRoutes[i]);
