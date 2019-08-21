@@ -36,6 +36,7 @@ function btnSpinner(activate, btnID) {
 function routesFieldMapping(inRoutes, routeType) {
   var outRoutes = [];
   for(var i = 0; i < inRoutes.length; i++) {
+    var drivetime = formatDrivetime(routes[i].attributes.TotalTravelTime);
     var attributes = {
       "OBJECTID": inRoutes[i].attributes.ObjectID,
       "Name": inRoutes[i].attributes.Name.split(' - ')[0],
@@ -47,6 +48,7 @@ function routesFieldMapping(inRoutes, routeType) {
       "Total_Kilometers": inRoutes[i].attributes.TotalDistance,
       "RouteType": routeType,
       "Destination": inRoutes[i].attributes.Name.split(' - ')[1],
+      "Formatted_TravelTime": drivetime
     };
     inRoutes[i].attributes = attributes;
     outRoutes.push(inRoutes[i]);
@@ -57,11 +59,22 @@ function routesFieldMapping(inRoutes, routeType) {
 function appendToRoutes(routes, routeType) {
   for(var i = 0; i < routes.length; i++) {
     var name = routes[i].attributes.Name.split(' - ');
+    var drivetime = formatDrivetime(routes[i].attributes.Total_TravelTime);
+
     routes[i].attributes["Name"] = name[0];
     routes[i].attributes["RouteType"] = routeType;
-    routes[i].attributes["Destination"] = name[1]; 
+    routes[i].attributes["Destination"] = name[1];
+    routes[i].attributes["Formatted_TravelTime"] = drivetime; 
   }
   return routes;
+}
+
+function formatDrivetime(drivetime) {
+  if (drivetime < 60) {
+    return moment().startOf('day').add(drivetime, 'minutes').format('mm:ss');
+  } else {
+    return moment().startOf('day').add(drivetime, 'minutes').format('HH:mm:ss');
+  }
 }
 
 

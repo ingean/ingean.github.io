@@ -182,6 +182,15 @@ const schema_routes = {
       "length" : 256, 
       "domain" : null, 
       "defaultValue" : null
+    }, 
+    {
+      "name" : "Formatted_TravelTime", 
+      "type" : "esriFieldTypeString", 
+      "alias" : "Kjøretid, formatert", 
+      "sqlType" : "sqlTypeOther", 
+      "length" : 256, 
+      "domain" : null, 
+      "defaultValue" : null
     }
   ]
 }
