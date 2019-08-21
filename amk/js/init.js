@@ -1,7 +1,12 @@
 $(function(){
+  init();
+})
+
+function init() {
   getToken();
   resetDemo();
-})
+  getRoutesSchema()
+}
 
 function getToken(){
   var settings = {
@@ -33,5 +38,18 @@ function resetDemo() {
   deleteAllFeatures(url_routes, 'routes');
   deleteAllFeatures(url_messages, 'messages');
 
+}
+
+function getRoutesSchema() {
+  var url = url_routes + '?f=json';
+  $.get(url)
+  .then(response => {
+    schema_routes.fields = JSON.parse(response).fields;
+    console.log('Successfully fetched schema for output routes');
+  })
+  .catch(error => {
+    console.log('Not able to get schema for output routes: ' + error);
+    showError('Klarte ikke hente skjema for kjøreruter');
+  })
 }
 
