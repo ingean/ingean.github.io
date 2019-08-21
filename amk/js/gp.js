@@ -1,3 +1,5 @@
+var responseGridStarted = false;
+
 function findStandby() {
   btnSpinner(true, '#btn-findStandby');
   var selectedDay = moment($('#input-date').val()).format('dddd');
@@ -10,7 +12,9 @@ function findStandby() {
   .done(response => {
     console.log('Submitted request for location allocation successfully, check job status:');
     console.log(url_locationAllocation + '/jobs/' + response.jobId + '?f=pjson');
-    checkGPJob(url_locationAllocation, response.jobId);
+    checkGPJob(url_locationAllocation, response.jobId, 1000, 50, function(response) {
+      //Do something while executing
+    });
   })
   .fail(error => {
     console.log('Failed to find standby locations: ' + error);
@@ -47,7 +51,9 @@ function executePlume() {
     .done(response => {
       console.log('Submitted request for plume successfully, check job status: ');
       console.log(url_plumeGP + '/jobs/' + response.jobId + '?f=pjson');
-      checkGPJob(url_plumeGP, response.jobId);
+      checkGPJob(url_plumeGP, response.jobId, 1000, 50, function(response) {
+        //Do something while executing
+      });
     })
     .fail(error => {
       console.log('Failed to create plumes: ' + error);
@@ -55,6 +61,44 @@ function executePlume() {
     })
   })
 }
+
+function executeRoadCloseGP() {
+  btnSpinner(true, '#btn-createRoadBlocks');
+
+  $.get(url_plumeResult + "/query?f=json&where=id_field='Hot'")
+  .done(response => {
+    var data = {
+      "Område": JSON.stringify({
+        "geometryType": "esriGeometryPolygon",
+        "spatialReference": {
+          "wkid" : 25833, 
+          "latestWkid" : 25833
+        }, 
+        "fields": schema_roadblockArea.fields,
+        "features": response.features
+      }),
+      "Melding": "Hot faresone"
+    }
+
+    $.post(url_roadcloseGP + '/submitJob?f=json',data)
+    .done(response => {
+      console.log('Submitted request for roadblocks successfully, check job status: ');
+      console.log(url_roadcloseGP + '/jobs/' + response.jobId + '?f=pjson');
+      checkGPJob(url_roadcloseGP, response.jobId, 1000, 50, function(response) {
+        //Do something while executing
+      });
+    })
+    .fail(error => {
+      console.log('Failed to submit request for roadblocks: ' + error);
+      showError('Failed to create roadblocks');
+    })
+  })
+  .fail(error => {
+    console.log('Failed to get plume polygon for use as input to roadblocks GP-tool: ' + error);
+    showError('Failed to create roadblocks');
+  })
+}
+
 
 function startSimulation(features) {
   var url = url_simulator + '/submitJob';
@@ -86,7 +130,9 @@ function startSimulation(features) {
   .done(response => {
     console.log('Submitted request for starting simulation successfully, check job status:');
     console.log(url_simulator + '/jobs/' + response.jobId + '?f=pjson');
-    checkGPJob(url_simulator, response.jobId);
+    checkGPJob(url_simulator, response.jobId, 1000, 50, function(response) {
+      //Do something while executing
+    });
   })
   .fail(error => {
     console.log('Failed to submit features to GeoEvent simulator: ' + error);
@@ -94,14 +140,52 @@ function startSimulation(features) {
   })
 }
 
-function checkGPJob(url_GPservice, jobId, freq = 5000, maxQueries = 50) {
+function startResponseGrid() {
+  var url = url_responseGP + '/submitJob';
+  var data = {
+    "f":"json",
+    "Antall": $('#input-gridIterations').val()
+  }
+
+  $.post(url,data)
+  .done(response => {
+    console.log('Submitted request for starting responsegrid script successfully, check job status:');
+    console.log(url_responseGP + '/jobs/' + response.jobId + '?f=pjson');
+    var iterations = Number($('#input-gridIterations').val()) + 10;
+    checkGPJob(url_responseGP, response.jobId, 6000, iterations, function(response) {
+      var messages = response.messages;
+      for(var i = 0; i < messages.length; i++) {
+        if(messages[i].description.length === 1) {
+          if(messages[i].description === '1' && responseGridStarted === false) {
+            responseGridStarted = true;
+            console.log('Response grid script is running');
+            //showError('Beredskapsgridet er klar til bruk', 'info');
+          }
+          $('#span-iterationCount').html(
+            messages[i].description + 
+            ' av ' +
+            $('#input-gridIterations').val() 
+          );
+        }
+      }
+    });
+  })
+  .fail(error => {
+    console.log('Failed to submit responsegrid script startup: ' + error);
+    showError('Oppstart av beredskapsgrid feilet'); 
+  })
+}
+
+
+function checkGPJob(url_GPservice, jobId, freq, maxQueries, callback) {
   var url = url_GPservice + '/jobs/' + jobId + '?f=json';
   if(maxQueries > 0) {
     $.get(url)
     .done(response => {
       if(response.jobStatus !== 'esriJobSucceeded' && response.jobStatus !== 'esriJobFailed') {
+        if (response.jobStatus === 'esriJobExecuting') { callback(response); }
         setTimeout(() => {
-          checkGPJob(url_GPservice, jobId, freq, maxQueries - 1);
+          checkGPJob(url_GPservice, jobId, freq, maxQueries - 1, callback);
         }, freq);
       } else if(response.jobStatus === 'esriJobFailed') {
         btnSpinner(false);
@@ -109,6 +193,8 @@ function checkGPJob(url_GPservice, jobId, freq = 5000, maxQueries = 50) {
         showError('Failed to run GP-tool');
       } else {
         btnSpinner(false);
+        $('#span-iterationCount').html('');
+        console.log('GP-tool finished successfully');
       }
     })
     .fail(error => {

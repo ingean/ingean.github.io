@@ -1,5 +1,6 @@
 var TOKEN = '';
 var schema_routes = {};
+var schema_roadblockArea = {};
 const incidentsList = [url_incident, url_standby];
 const url_barriers = [url_barriersPoints, url_barriersLines, url_barriersPolygons];
 const params_barriers = ['barriers','polylineBarriers','polygonBarriers'];

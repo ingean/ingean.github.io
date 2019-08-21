@@ -5,7 +5,9 @@ $(function(){
 function init() {
   getToken();
   resetDemo();
-  getRoutesSchema()
+  getRoutesSchema();
+  getRoadBlockAreaSchema();
+  startResponseGrid();
 }
 
 function getToken(){
@@ -37,6 +39,7 @@ function resetDemo() {
   resetResources();
   deleteAllFeatures(url_routes, 'routes');
   deleteAllFeatures(url_messages, 'messages');
+  deleteAllFeatures(url_roadcloseResults, 'roadblocks');
 
 }
 
@@ -52,4 +55,18 @@ function getRoutesSchema() {
     showError('Klarte ikke hente skjema for kjøreruter');
   })
 }
+
+function getRoadBlockAreaSchema() {
+  var url = url_roadcloseGP + '?f=json';
+  $.get(url)
+  .then(response => {
+    schema_roadblockArea.fields = response.fields;
+    console.log('Successfully fetched schema for roadblock GP-tool input area');
+  })
+  .catch(error => {
+    console.log('Not able to get schema for roadblock GP-tool input area: ' + error);
+    showError('Klarte ikke hente skjema for område for veisperringer');
+  })
+}
+
 
