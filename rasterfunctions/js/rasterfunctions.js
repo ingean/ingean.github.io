@@ -10,10 +10,10 @@ require([
     
   //Token expires: Friday, August 21, 2020 11:33:47
   //Token http referer: https://ingean.github.io
- /*  IdentityManager.registerToken({
+  IdentityManager.registerToken({
     server: "https://services2.geodataonline.no/arcgis/rest/services",
     token: "GFKw0mC1pVj4AI3BMVBpdBSRby7s4G4fzauZze-YW8w8h1f47kOrkPMv_BztdKFDvJeHKBFsnT3K4DYCtaV2Xw.."
-  }); */
+  });
 
 
   /***************************************
