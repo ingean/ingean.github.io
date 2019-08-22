@@ -15,10 +15,6 @@ require([
     token: "GFKw0mC1pVj4AI3BMVBpdBSRby7s4G4fzauZze-YW8w8h1f47kOrkPMv_BztdKFDvJeHKBFsnT3K4DYCtaV2Xw.."
   });
 
-
-  /***************************************
-   * Create basemap from GDO layer
-   **************************************/  
   
   var basemap = new Basemap({
     portalItem: {
@@ -26,21 +22,12 @@ require([
     }
   });
   
-  /***************************************
-   * Set up popup template of image layer
-   **************************************/
-
   var imagePopupTemplate = {
-    // autocasts as new PopupTemplate()
     title: "Terrengmodell over Norge",
     content:
       "Visning: <b>{Raster.ServicePixelValue} </b>" +
       "<br>Høyde over havet: <b>{Raster.ItemPixelValue} </b>"
   };
-
-  /*******************************************************************
-   * Create image layer with server defined raster function templates
-   ******************************************************************/
 
   var slopeRFT = new RasterFunction({
     functionName: "Slope_Degrees",
@@ -52,36 +39,27 @@ require([
     variableName: "Raster"
   });
 
+  var reliefRFT = new RasterFunction({
+    functionName: "Grayscale_Hillshade",
+    variableName: "Raster"
+  });
+
   var steepRF = new RasterFunction({
-    functionName: "Slope_Degrees",
+    functionName: "Remap",
     functionArguments: {
-      // pixel values of forest categories are 41, 42, and 43
-      // according to the  raster attribute table.
-      // The InputRanges property defines the ranges of intial pixel values to remap
-      // Three ranges: [0, 41], [41, 44], and [44, 255] are defined to extract forest pixels.
-      inputRanges: [0, 30, 31, 90],
-      // non-forest pixels (0-41 and 44-255) are remapped to a value of 1,
-      // forest pixels (41-44) are remapped to a value of 2.
-      outputValues: [1, 2],
-      // $$(default) refers to the entire image service,
-      // $2 refers to the second image of the image service
-      variableName: "Raster"
+      inputRanges: [0, 30, 31, 60, 61, 90],
+      outputValues: [1, 2, 1],
+      raster: slopeRFT
     }
   });
 
   var steepColorRF = new RasterFunction({
-    functionName: "Steep_Terrain_Color",
+    functionName: "Colormap",
     functionArguments: {
       colormap: [
-        // non-forest pixels (value of 1) are assigned
-        // a yellowish color RGB = [253, 254, 152]
-        [1, 253, 254, 152],
-        // forest pixels (value of 2) are assigned
-        // a greenish color RGB = [2, 102, 6]
-        [2, 2, 102, 6]
+        [1, 0, 128, 0, 0.1], //Green
+        [2, 255, 0, 0] //Red
       ],
-      // Setting the previous raster function to the Raster
-      // property of a new raster function allows you to chain functions
       raster: steepRF
     },
     outputPixelType: "f32"
@@ -89,15 +67,11 @@ require([
 
   var layer = new ImageryLayer({
     url:
-      "https://services2.geodataonline.no/arcgis/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer",
-    renderingRule: heightRFT,
+      "https://utility.arcgis.com/usrsvcs/servers/7f3c945cd9cd4c3eba86b5d1fc3708f9/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer",
+    renderingRule: reliefRFT,
     popupTemplate: imagePopupTemplate,
     opacity: 0.7,
   });
-
-  /*************************
-   * Add image layer to map
-   ************************/
 
   var map = new Map({
     basemap: "gray",
@@ -108,7 +82,6 @@ require([
     container: "div-view",
     map: map,
     center: {
-      // autocasts as esri/geometry/Point
       x: 7,
       y: 62,
       spatialReference: 4326
@@ -119,9 +92,6 @@ require([
     }
   });
 
-  /*************************
-   * Add raster functions widget to map
-   ************************/
   document
   .getElementById("button-rasterfunction-hillshade")
   .addEventListener("click", rasterfunctionClickHandler);
@@ -139,6 +109,10 @@ require([
   .addEventListener("click", steepClickHandler);
   
   function rasterfunctionClickHandler(event) {
+    if(map.layers.length === 2) {
+      map.layers.remove(map.layers.getItemAt(1));
+    }
+    
     var serviceRFT = new RasterFunction({
       functionName: event.currentTarget.value.toString(),
       variableName: "Raster"
@@ -148,8 +122,18 @@ require([
   }
 
   function steepClickHandler(event) {
+    console.log(map.layers.length);
+    var steepLayer = new ImageryLayer({
+      url:
+        "https://utility.arcgis.com/usrsvcs/servers/7f3c945cd9cd4c3eba86b5d1fc3708f9/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer",
+      renderingRule: steepColorRF,
+      popupTemplate: imagePopupTemplate,
+      opacity: 0.7,
+    });
+    
+    map.layers.add(steepLayer);
     var layer = view.map.layers.getItemAt(0);
-    layer.renderingRule = steepColorRF;
+    layer.renderingRule = reliefRFT;
   }
 
 
