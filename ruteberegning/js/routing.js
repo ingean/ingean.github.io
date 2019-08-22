@@ -2,7 +2,6 @@ require([
   "esri/Map",
   "esri/views/MapView",
   "esri/Graphic",
-  "esri/layers/GraphicsLayer",
   "esri/tasks/ServiceAreaTask",
   "esri/tasks/support/ServiceAreaParameters",
   "esri/tasks/support/FeatureSet"
@@ -10,7 +9,6 @@ require([
   Map,
   MapView,
   Graphic,
-  GraphicsLayer,
   ServiceAreaTask,
   ServiceAreaParameters,
   FeatureSet
@@ -54,7 +52,7 @@ require([
       features: [locationGraphic]
     });
     // Set all of the input parameters for the service
-    var taskParameters = new ServiceAreaParams({
+    var taskParameters = new ServiceAreaParameters({
       facilities: featureSet, // Location(s) to start from
       defaultBreaks: driveTimeCutoffs, // One or more drive time cutoff values
       outSpatialReference: outSpatialReference // Spatial reference to match the view
