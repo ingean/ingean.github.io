@@ -47,7 +47,7 @@ require([
   var steepRF = new RasterFunction({
     functionName: "Remap",
     functionArguments: {
-      inputRanges: [0, 30, 31, 60, 61, 90],
+      inputRanges: [0, 30, 30, 60, 60, 90],
       outputValues: [1, 2, 1],
       raster: slopeRFT
     }
