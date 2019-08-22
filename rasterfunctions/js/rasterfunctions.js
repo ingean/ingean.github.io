@@ -17,10 +17,13 @@ require([
     token: "GFKw0mC1pVj4AI3BMVBpdBSRby7s4G4fzauZze-YW8w8h1f47kOrkPMv_BztdKFDvJeHKBFsnT3K4DYCtaV2Xw.."
   });
 
-  var tileLayer = new TileLayer({
-    url: 'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheGraatone/MapServer'
-  });
+  //Shared publicly from AGOL
+  const urlGeomapDTM = 'https://utility.arcgis.com/usrsvcs/servers/7f3c945cd9cd4c3eba86b5d1fc3708f9/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer';
+  const urlGeocacheGray = 'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheGraatone/MapServer';
 
+  var tileLayer = new TileLayer({
+    url: urlGeocacheGray
+  });
 
   var basemap = new Basemap({
     baseLayers: [tileLayer],
@@ -29,8 +32,7 @@ require([
   });
 
   var layer = new ImageryLayer({
-    url:
-      "https://utility.arcgis.com/usrsvcs/servers/7f3c945cd9cd4c3eba86b5d1fc3708f9/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer",
+    url: urlGeomapDTM,
     renderingRule: reliefRFT,
     popupTemplate: imagePopupTemplate,
     opacity: 0.7,
@@ -135,8 +137,7 @@ require([
   function steepClickHandler(event) {
     console.log(map.layers.length);
     var steepLayer = new ImageryLayer({
-      url:
-        "https://utility.arcgis.com/usrsvcs/servers/7f3c945cd9cd4c3eba86b5d1fc3708f9/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer",
+      url: urlGeomapDTM,
       renderingRule: steepColorRF,
       popupTemplate: imagePopupTemplate,
       opacity: 0.7,
@@ -146,7 +147,6 @@ require([
     var layer = view.map.layers.getItemAt(0);
     layer.renderingRule = reliefRFT;
   }
-
 
   const bufferTransparencySlider = new Slider({
     container: "slider-transparency",
@@ -175,4 +175,5 @@ require([
   }
 
   view.ui.add("div-rasterfunctions-selector", "bottom-left");
+  
 });
