@@ -16,7 +16,6 @@ require([
 
   var map = new Map({
     basemap: "streets-navigation-vector",
-    layers: [routeLayer] // Add the route layer to the map
   });
   
   var view = new MapView({
