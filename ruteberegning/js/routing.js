@@ -13,9 +13,18 @@ require([
   ServiceAreaParameters,
   FeatureSet
 ) {
-  // Point the URL to a valid route service that uses an
-  // ArcGIS Online hosted service proxy
+
+  var map = new Map({
+    basemap: "streets-navigation-vector",
+    layers: [routeLayer] // Add the route layer to the map
+  });
   
+  var view = new MapView({
+    container: "viewDiv", // Reference to the scene div created in step 5
+    map: map, // Reference to the map object created before the scene
+    center: [10.595, 59.957],
+    zoom: 11
+  });  
 
   var serviceAreaTask = new ServiceAreaTask({
     url: "https://utility.arcgis.com/usrsvcs/appservices/jbXaRK9bZe4Dm34X/rest/services/World/ServiceAreas/NAServer/ServiceArea_World/solveServiceArea"
@@ -77,16 +86,4 @@ require([
         console.log(error);
       });
   }
-
-  var map = new Map({
-    basemap: "streets-navigation-vector",
-    layers: [routeLayer] // Add the route layer to the map
-  });
-  var view = new MapView({
-    container: "viewDiv", // Reference to the scene div created in step 5
-    map: map, // Reference to the map object created before the scene
-    center: [10.595, 59.957],
-    zoom: 11
-  });
-
 });
