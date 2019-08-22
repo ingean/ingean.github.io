@@ -1,12 +1,14 @@
 require([
   "esri/Map",
   "esri/views/MapView",
+  "esri/geometry/Extent",
   "esri/Basemap",
+  "esri/layers/TileLayer",
   "esri/layers/ImageryLayer",
   "esri/layers/support/RasterFunction",
   "esri/widgets/Slider",
   "esri/identity/IdentityManager"
-], function(Map, MapView, Basemap, ImageryLayer, RasterFunction, Slider,IdentityManager) {
+], function(Map, MapView, Extent, Basemap, TileLayer, ImageryLayer, RasterFunction, Slider,IdentityManager) {
     
   //Token expires: Friday, August 21, 2020 11:33:47
   //Token http referer: https://ingean.github.io
@@ -15,10 +17,46 @@ require([
     token: "GFKw0mC1pVj4AI3BMVBpdBSRby7s4G4fzauZze-YW8w8h1f47kOrkPMv_BztdKFDvJeHKBFsnT3K4DYCtaV2Xw.."
   });
 
-  
+  var tileLayer = new TileLayer({
+    url: 'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheGraatone/MapServer'
+  });
+
+
   var basemap = new Basemap({
-    portalItem: {
-      id: "bdef8d90ce664b679470eeb5adace15b"  // Geodata Online Gråtone
+    baseLayers: [tileLayer],
+    title: "Geodata Bakgrunnskart",
+    id: "GeocacheLandskap"
+  });
+
+  var layer = new ImageryLayer({
+    url:
+      "https://utility.arcgis.com/usrsvcs/servers/7f3c945cd9cd4c3eba86b5d1fc3708f9/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer",
+    renderingRule: reliefRFT,
+    popupTemplate: imagePopupTemplate,
+    opacity: 0.7,
+  });
+      
+  var map = new Map({ 
+    basemap: basemap,
+    layers:[layer] 
+  });
+
+  var extent = new Extent({
+    xmin: 120000,
+    ymin: 6820000,
+    xmax: 150000,
+    ymax: 6860000,
+    spatialReference: {
+      wkid: 25833
+    }
+  });
+
+ var view = new MapView({
+    container: "div-view", 
+    map: map,
+    extent: extent,
+    popup: {
+      actions: []
     }
   });
   
@@ -63,33 +101,6 @@ require([
       raster: steepRF
     },
     outputPixelType: "f32"
-  });
-
-  var layer = new ImageryLayer({
-    url:
-      "https://utility.arcgis.com/usrsvcs/servers/7f3c945cd9cd4c3eba86b5d1fc3708f9/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer",
-    renderingRule: reliefRFT,
-    popupTemplate: imagePopupTemplate,
-    opacity: 0.7,
-  });
-
-  var map = new Map({
-    basemap: "gray",
-    layers: [layer]
-  });
-
-  var view = new MapView({
-    container: "div-view",
-    map: map,
-    center: {
-      x: 7,
-      y: 62,
-      spatialReference: 4326
-    },
-    zoom: 12,
-    popup: {
-      actions: []
-    }
   });
 
   document
