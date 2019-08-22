@@ -49,7 +49,7 @@ require([
   view.on("click", function(event){
     var locationGraphic = createGraphic(event.mapPoint);
     
-    var driveTimeCutoffs = [10]; // Minutes (default)
+    var driveTimeCutoffs = [12,25]; // Minutes (default)
     var serviceAreaParams = createServiceAreaParams(locationGraphic, driveTimeCutoffs, view.spatialReference);
     executeServiceAreaTask(serviceAreaParams);
   });
