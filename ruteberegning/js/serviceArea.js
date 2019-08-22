@@ -21,7 +21,7 @@ require([
   var view = new MapView({
     container: "viewDiv", // Reference to the scene div created in step 5
     map: map, // Reference to the map object created before the scene
-    center: [10.595, 59.957],
+    center: [10.7522, 59.9139],
     zoom: 11
   });  
 
