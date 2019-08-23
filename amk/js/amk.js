@@ -38,7 +38,7 @@ function btnSpinner(activate, btnID) {
 function routesFieldMapping(inRoutes, routeType) {
   var outRoutes = [];
   for(var i = 0; i < inRoutes.length; i++) {
-    var drivetime = formatDrivetime(routes[i].attributes.TotalTravelTime);
+    var drivetime = formatDrivetime(inRoutes[i].attributes.TotalTravelTime);
     var attributes = {
       "OBJECTID": inRoutes[i].attributes.ObjectID,
       "Name": inRoutes[i].attributes.Name.split(' - ')[0],
