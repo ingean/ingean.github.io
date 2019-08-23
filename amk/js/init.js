@@ -39,8 +39,8 @@ function resetDemo() {
   deleteAllFeatures(url_routes, 'routes');
   deleteAllFeatures(url_messages, 'messages');
   deleteAllFeatures(url_roadcloseResults, 'roadblocks');
-  //deleteAllFeatures(url_plumeResult, 'plumes');
-
+  deleteAllFeatures(removeUrlQuery(url_standby), 'beredskapspunkter');
+  deleteAllFeatures(url_plumeResult, 'plumes');
 }
 
 function getRoutesSchema() {
