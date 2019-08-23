@@ -3,7 +3,7 @@ function deleteAllFeatures(url, featurename = 'features') {
     "where":"1=1"
   };
   
-  $.post(url + '/deleteFeatures', data)
+  $.post(url + '/deleteFeatures?f=json', data)
   .done(response => {
     console.log('All existing ' + featurename + ' deleted');
   })

@@ -121,6 +121,24 @@ function resetResources() {
   });
 }
 
+function resetStandby() {
+  var url = removeUrlQuery(url_standby.url);
+  var data = {
+    "f":"JSON",
+    "where":"allokert=3",
+    "calcExpression": JSON.stringify([{"field": "allokert","value": 0}])
+  }
+  $.post(url + '/calculate', data)
+  .done(response => {
+    console.log('Successful reset of standby points status');
+  })
+  .fail(error => {
+    console.log('Resetting standby points statuses failed: ' + error);
+    showError('Klarte ikke å tilbakestille status på beredskapspunkter');
+  })
+}
+
+
 function addBarriers(params) {
   return new Promise(resolve => {
     if($("#switch-useBarriers").is(':checked')) {
@@ -151,27 +169,10 @@ function addBarriers(params) {
   
 }
 
-function resetStandby() {
-  var url = removeUrlQuery(url_standby.url);
-  var data = {
-    "f":"JSON",
-    "where":"allokert=3",
-    "calcExpression": JSON.stringify([{"field": "allokert","value": 0}])
-  }
-  $.post(url + '/calculate',data)
-  .done(response => {
-    console.log('Successful reset of standby points status');
-  })
-  .fail(error => {
-    console.log('Resetting standby points statuses failed: ' + error);
-    showError('Klarte ikke å tilbakestille status på beredskapspunkter');
-  })
-}
-
 function addIncidentMessage() {
-  
   $.get(url_incident.url)
   .done(response => {
+    response = JSON.parse(response);
     var incident = response.features[0];
     var data = {
       "f":"JSON",
