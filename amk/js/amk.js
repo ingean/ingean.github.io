@@ -38,10 +38,11 @@ function btnSpinner(activate, btnID) {
 function routesFieldMapping(inRoutes, routeType) {
   var outRoutes = [];
   for(var i = 0; i < inRoutes.length; i++) {
+    var name = inRoutes[i].attributes.Name.split(' - ');
     var drivetime = formatDrivetime(inRoutes[i].attributes.TotalTravelTime);
     var attributes = {
       "OBJECTID": inRoutes[i].attributes.ObjectID,
-      "Name": inRoutes[i].attributes.Name.split(' - ')[0],
+      "Name": name[0],
       "StartTime": inRoutes[i].attributes.StartTime,
       "EndTime": inRoutes[i].attributes.EndTime,
       "StartTimeUTC": inRoutes[i].attributes.StartTimeUTC,
@@ -49,7 +50,7 @@ function routesFieldMapping(inRoutes, routeType) {
       "Total_TravelTime": inRoutes[i].attributes.TotalTravelTime,
       "Total_Kilometers": inRoutes[i].attributes.TotalDistance,
       "RouteType": routeType,
-      "Destination": inRoutes[i].attributes.Name.split(' - ')[1],
+      "Destination": name[1],
       "Formatted_TravelTime": drivetime
     };
     inRoutes[i].attributes = attributes;
