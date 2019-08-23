@@ -151,6 +151,57 @@ function addBarriers(params) {
   
 }
 
+function resetStandby() {
+  var url = removeUrlQuery(url_standby.url);
+  var data = {
+    "f":"JSON",
+    "where":"allokert=3",
+    "calcExpression": JSON.stringify([{"field": "allokert","value": 0}])
+  }
+  $.post(url + '/calculate',data)
+  .done(response => {
+    console.log('Successful reset of standby points status');
+  })
+  .fail(error => {
+    console.log('Resetting standby points statuses failed: ' + error);
+    showError('Klarte ikke å tilbakestille status på beredskapspunkter');
+  })
+}
+
+function addIncidentMessage() {
+  
+  $.get(url_incident.url)
+  .done(response => {
+    var incident = response.features[0];
+    var data = {
+      "f":"JSON",
+      "features": JSON.stringify([{
+        "geometry": incident.geometry,
+        "attributes": {
+          "Name":"Akutt hendelse",
+          "Status":"på",
+          "Destination":incident.attributes.Name,
+          "Dato": moment().format('YYYY-MM-DDTHH:mm:ss')
+        }
+      }])
+    }
+
+    $.post(url_messages + '/addFeatures',data)
+    .done(response => {
+      console.log('Successfully added message with incident');
+    })
+    .fail(error => {
+      console.log('Failed to update messages with incident: ' + error);
+    })
+  })
+  .fail(error => {
+    console.log('Failed to get incident feature: ' + error);
+  })
+  
+  
+  
+}
+
 function addTimeofDay(params, timekey = 'timeOfDay') {
   if($("#switch-liveTraffic").is(':checked')) {
     params[timekey] = moment($('#input-date').val()).unix();
