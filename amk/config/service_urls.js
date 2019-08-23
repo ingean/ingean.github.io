@@ -15,7 +15,7 @@ const url_resources = {"url": "https://demo01.geodata.no/arcgis/rest/services/Ge
 //NA barriers
 const url_barriersPoints = {"url": "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/AMK_barriers/FeatureServer/0/query?where=1%3D1&returnGeometry=true&f=json"};
 const url_barriersLines = {"url": "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/AMK_barriers/FeatureServer/1/query?where=1%3D1&returnGeometry=true&f=json"};
-const url_barriersPolygons = {"url": "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/AMK_barriers/FeatureServer/2/query?where=1%3D1&returnGeometry=true&f=json&fields=*"};
+const url_barriersPolygons = {"url": "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/AMK_barriers/FeatureServer/2/query?where=1%3D1&returnGeometry=true&f=json&outFields=*"};
 
 //Output feature services
 const url_routes = 'https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/AMK_resultater/FeatureServer/2';
