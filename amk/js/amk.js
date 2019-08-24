@@ -210,8 +210,9 @@ function addTimeofDay(params, timekey = 'timeOfDay') {
   } else {
     var timestring = moment(historicTimes[$('#select-weekday').val()],'DD.MM.YYYY').format('DD.MM.YYYY') + 
                     'T' + 
-                    moment($('#input-date').val()).format('HH:00:00'); 
+                    moment($('#input-date').val()).utc().format('HH:00:00'); 
     params[timekey] = moment(timestring,'DD.MM.YYYYTHH:mm:ss').unix();
+    params["timeOfDayIsUTC"] = true;
     return params;
   }
 }
