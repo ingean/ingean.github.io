@@ -1,4 +1,5 @@
 var responseGridStarted = false;
+var responseGridIter = 1;
 
 function findStandby() {
   btnSpinner(true, '#btn-findStandby');
@@ -147,6 +148,7 @@ function startResponseGrid() {
     "f":"json",
     "Antall": $('#input-gridIterations').val()
   }
+  responseGridIter = 1;
 
   $.post(url,data)
   .done(response => {
@@ -157,14 +159,15 @@ function startResponseGrid() {
     checkGPJob(url_responseGP, response.jobId, 6000, iterations, function(response) {
       var messages = response.messages;
       for(var i = 0; i < messages.length; i++) {
-        if(messages[i].description.length === 1) {
+        if(messages[i].description.length < 4) {
+          responseGridIter++;
           if(messages[i].description === '1' && responseGridStarted === false) {
             responseGridStarted = true;
             console.log('Response grid script is running');
             //showError('Beredskapsgridet er klar til bruk', 'info');
           }
           $('#span-iterationCount').html(
-            messages[i].description + 
+            responseGridIter + 
             ' av ' +
             $('#input-gridIterations').val() 
           );
