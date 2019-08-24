@@ -155,7 +155,7 @@ function startResponseGrid() {
     $('#span-iterationCount').html('Starter'); //Viser indikator på at Beredskapsgridet starter
     console.log('Submitted request for starting responsegrid script successfully, check job status:');
     console.log(url_responseGP + '/jobs/' + response.jobId + '?f=pjson');
-    var iterations = Number($('#input-gridIterations').val()) + 10;
+    var iterations = Number($('#input-gridIterations').val()) + 100;
     checkGPJob(url_responseGP, response.jobId, 6000, iterations, function(response) {
       var messages = response.messages;
       for(var i = 0; i < messages.length; i++) {
