@@ -182,7 +182,7 @@ function addIncidentMessage() {
           "Name":"Akutt hendelse",
           "Status":"på",
           "Destination":incident.attributes.Name,
-          "Dato": moment().format('YYYY-MM-DDTHH:mm:ss')
+          "Dato": moment().utc().format('YYYY-MM-DDTHH:mm:ss')
         }
       }])
     }
