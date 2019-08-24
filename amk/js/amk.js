@@ -205,14 +205,15 @@ function addIncidentMessage() {
 
 function addTimeofDay(params, timekey = 'timeOfDay') {
   if($("#switch-liveTraffic").is(':checked')) {
-    params[timekey] = moment($('#input-date').val()).unix();
+    params[timekey] = moment($('#input-date').val()).valueOf();
+    console.log('Time of analysis (real time): ' + moment(params[timekey]).format('DD.MM.YYYY HH:mm:ss') + ', EPOC (milliseconds): ' + params[timekey]);
     return params;
   } else {
     var timestring = moment(historicTimes[$('#select-weekday').val()],'DD.MM.YYYY').format('DD.MM.YYYY') + 
                     'T' + 
                     moment($('#input-date').val()).format('HH:00:00'); 
     params[timekey] = moment(timestring,'DD.MM.YYYYTHH:mm:ss').valueOf();
-    console.log('Time of analysis: ' + moment(params[timekey]).format('DD.MM.YYYY HH:mm:ss') + ', EPOC (milliseconds): ' + params[timekey]);
+    console.log('Time of analysis (historic): ' + moment(params[timekey]).format('DD.MM.YYYY HH:mm:ss') + ', EPOC (milliseconds): ' + params[timekey]);
     return params;
   }
 }
