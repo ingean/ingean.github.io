@@ -213,6 +213,7 @@ function addTimeofDay(params, timekey = 'timeOfDay') {
                     moment($('#input-date').val()).utc().format('HH:00:00'); 
     params[timekey] = moment(timestring,'DD.MM.YYYYTHH:mm:ss').unix();
     params["timeOfDayIsUTC"] = true;
+    console.log('Time of analysis: ' + moment(params[timekey]).format('DD.MM.YYYY HH:mm:ss') + ' UTC, EPOC: ' + params[timekey]);
     return params;
   }
 }
