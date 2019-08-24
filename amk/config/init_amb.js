@@ -47,7 +47,7 @@ const init_amb = [
   },
   {
     "geometry": {"x": 268134.55278381647,"y": 6646695.892765791,"spatialReference": {"wkid": 25833,"latestWkid": 25833}},
-    "attributes": {"objectid": 404,"status": "Pause"}
+    "attributes": {"objectid": 404,"status": "Matpause"}
   },
   {
     "geometry": {"x": 265337.01831727254,"y": 6641831.212587556,"spatialReference": {"wkid": 25833,"latestWkid": 25833}},
