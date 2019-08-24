@@ -35,13 +35,14 @@ function resetDemo() {
   $("#input-date").val(moment().format('YYYY-MM-DDTHH:00'));
   $("#switch-useBarriers").prop('checked', true);
   
-  resetResources();
   deleteAllFeatures(url_routes, 'routes');
   deleteAllFeatures(url_messages, 'messages');
   deleteAllFeatures(url_roadcloseResults, 'roadblocks');
   deleteAllFeatures(url_plumeResult, 'plumes');
 
+  resetResources();
   resetStandby();
+  
   addIncidentMessage();
 }
 

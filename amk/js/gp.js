@@ -12,7 +12,7 @@ function findStandby() {
   .done(response => {
     console.log('Submitted request for location allocation successfully, check job status:');
     console.log(url_locationAllocation + '/jobs/' + response.jobId + '?f=pjson');
-    checkGPJob(url_locationAllocation, response.jobId, 1000, 50, function(response) {
+    checkGPJob(url_locationAllocation, response.jobId, 1000, 200, function(response) {
       //Do something while executing
     });
   })
@@ -126,6 +126,7 @@ function startSimulation(features) {
     })
   }; 
 
+  //console.log(JSON.stringify(data.Linjer));
   $.post(url,data)
   .done(response => {
     console.log('Submitted request for starting simulation successfully, check job status:');
@@ -149,6 +150,7 @@ function startResponseGrid() {
 
   $.post(url,data)
   .done(response => {
+    $('#span-iterationCount').html('Starter'); //Viser indikator på at Beredskapsgridet starter
     console.log('Submitted request for starting responsegrid script successfully, check job status:');
     console.log(url_responseGP + '/jobs/' + response.jobId + '?f=pjson');
     var iterations = Number($('#input-gridIterations').val()) + 10;
