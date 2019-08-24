@@ -170,7 +170,7 @@ function addBarriers(params) {
 }
 
 function addIncidentMessage() {
-  $.get(url_incident.url)
+  $.get(url_incident.url + '&outSR=25833')
   .done(response => {
     response = JSON.parse(response);
     var incident = response.features[0];
