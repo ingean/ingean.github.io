@@ -35,6 +35,7 @@ function resetDemo() {
   $('#span-iterationCount').html('');
   $("#input-date").val(moment().format('YYYY-MM-DDTHH:00'));
   $("#switch-useBarriers").prop('checked', true);
+  $("#switch-liveTraffic").prop('checked', true);
   
   deleteAllFeatures(url_routes, 'routes');
   deleteAllFeatures(url_messages, 'messages');
