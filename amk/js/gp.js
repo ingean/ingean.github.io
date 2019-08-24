@@ -198,7 +198,7 @@ function checkGPJob(url_GPservice, jobId, freq, maxQueries, callback) {
       console.log('Failed to get job status: ' + error);
     })
   } else {
-    console.log('GP tool timed out');
+    console.log('GP tool job status check timed out');
     btnSpinner(false);
   }
 }
