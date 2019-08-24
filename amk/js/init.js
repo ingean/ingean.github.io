@@ -32,6 +32,7 @@ function getToken(){
 }
 
 function resetDemo() {
+  $('#span-iterationCount').html('');
   $("#input-date").val(moment().format('YYYY-MM-DDTHH:00'));
   $("#switch-useBarriers").prop('checked', true);
   
