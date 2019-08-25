@@ -23,6 +23,7 @@
     <script type="text/javascript" src="config/service_urls.js"></script>
     <script type="text/javascript" src="config/init_amb.js"></script>
     <script type="text/javascript" src="config/schema_cbrne.js"></script>
+    <script type="text/javascript" src="config/heli_coords.js"></script>
     <script type="text/javascript" src="js/init.js"></script>
     <script type="text/javascript" src="js/arcgis_api.js"></script>
     <script type="text/javascript" src="js/amk.js"></script>
@@ -66,10 +67,13 @@
           </button>
         </div>
         <div id="menu2" class="tab-pane fade">
-          <h3>Sperreposter</h3>
-          <p>Setter ut sperreposter for å hindre uønsket trafikk inn i hendelsesområde.</p>
+          <h3>Taktiske analyser</h3>
+          <p>Diverse analyser for situasjonsforståelse</p>
           <button id="btn-createRoadBlocks" type="button" class="btn btn-primary" onclick="executeRoadCloseGP()"> 
             Sett ut sperreposter
+          </button>
+          <button id="btn-findHeli" type="button" class="btn btn-primary" onclick="executeFindHeli()"> 
+            Nærmeste luftambulanse
           </button>
         </div>
         <div id="menu3" class="tab-pane fade">

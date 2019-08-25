@@ -7,6 +7,7 @@ function init() {
   resetDemo();
   getRoutesSchema();
   getRoadBlockAreaSchema();
+  getHeliSchema()
 }
 
 function getToken(){
@@ -71,6 +72,19 @@ function getRoadBlockAreaSchema() {
   .catch(error => {
     console.log('Not able to get schema for roadblock GP-tool input area: ' + error);
     showError('Klarte ikke hente skjema for område for veisperringer');
+  })
+}
+
+function getHeliSchema() {
+  var url = url_heliGP + '?f=json';
+  $.get(url)
+  .then(response => {
+    schema_heliPoint.fields = response.fields;
+    console.log('Successfully fetched schema for helicopter GP-tool input area');
+  })
+  .catch(error => {
+    console.log('Not able to get schema for helicopter GP-tool input area: ' + error);
+    showError('Klarte ikke hente skjema for punkt til å finne nærmeste luftambulanse');
   })
 }
 

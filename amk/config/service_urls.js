@@ -35,6 +35,10 @@ const url_plumeResult = 'https://demo01.geodata.no/arcgis/rest/services/Sikkerhe
 const url_roadcloseGP = 'https://demo01.geodata.no/arcgis/rest/services/GeoTek/Veisperringer_GP/GPServer/Veisperringer';
 const url_roadcloseResults = 'https://demo01.geodata.no/arcgis/rest/services/GeoTek/VeiSperringer/FeatureServer/0';
 
+const url_heliGP = 'https://demo04.geodata.no/arcgis/rest/services/FinnRedningstid/GPServer/Finn%20redningstid%20for%20luftambulansen';
+
+
+
 //Starting the responsegrid script
 const url_responseGP = 'https://demo01.geodata.no/arcgis/rest/services/AMK/BeredskapsindeksGP/GPServer/Beredskapsindeks';
 

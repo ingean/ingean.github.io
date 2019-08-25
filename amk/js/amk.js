@@ -1,6 +1,8 @@
 var TOKEN = '';
 var schema_routes = {};
 var schema_roadblockArea = {};
+var schema_heliPoint = {};
+
 const incidentsList = [url_incident, url_standby];
 const url_barriers = [url_barriersPoints, url_barriersLines, url_barriersPolygons];
 const params_barriers = ['barriers','polylineBarriers','polygonBarriers'];
@@ -221,4 +223,35 @@ function addTimeofDay(params, timekey = 'timeOfDay') {
 function removeUrlQuery(url) {
   url = String(url);
   return url.substr(0, url.indexOf('/query?'));
+}
+
+function showHeliRoutes(messages, incidentPoint) {
+  var routes = [];
+  var m = [4,14,24,34,44];
+
+  for (var i = 0; i < 4; i++) {
+    var descr = messages[m[i]].description; 
+    var hl = heliLocations[descr.substr(0,descr.indexOf(' ')).replace('\\','')];
+    
+    var route = {
+      "attributes": {
+        "Name": hl.label,
+        "RouteType":"Helikopter",
+        "Destination": incidentPoint.attributes.Name,
+        "Formatted_TravelTime": formatDrivetime(parseHeliTravelTime(messages[m[i] + 3].description))
+      },
+      "geometry": {
+        "paths": [[[hl.coords[0],hl.coords[1]],[incidentPoint.geometry.x,incidentPoint.geometry.y]]]
+      }
+    }
+    routes.push(route);
+  }
+  addFeatures(url_routes, routes);
+}
+
+function parseHeliTravelTime(description) {
+  var start = description.indexOf(':') + 1;
+  var end = description.indexOf('m') - start;
+  
+  return Number(description.substr(start, end).trim());
 }

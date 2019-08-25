@@ -97,6 +97,45 @@ function executeRoadCloseGP() {
   })
 }
 
+function executeFindHeli() {
+  var incidentPoint = {};
+  btnSpinner(true, '#btn-findHeli');
+  deleteAllFeatures(url_routes, 'routes');
+  
+  $.get(url_incident.url + '&outSR=25833')
+  .done(response => {
+    response = JSON.parse(response);
+    incidentPoint = response.features[0];
+    var data = {
+      "Hendelse": JSON.stringify({
+        "geometryType": "esriGeometryPoint",
+        "spatialReference": {
+          "wkid" : 25833, 
+          "latestWkid" : 25833
+        },
+        "fields": schema_heliPoint.fields,
+        "features": response.features
+      }),
+      "Utstyr": "Rescuebag",
+      "Mottak": "OUS/Ullevaal"
+    }
+
+    $.post(url_heliGP + '/execute?f=json',data)
+    .done(response => {
+      console.log('Executed closest helicopter successfully');
+      showHeliRoutes(response.messages, incidentPoint);
+    })
+    .fail(error => {
+      console.log('Failed to execute find closest helicopter: ' + error);
+      showError('Klarte ikke finne nærmeste luftambulanse');
+    })
+  })
+  .fail(error => {
+    console.log('Failed to get incident for use as input to find closest helicopter GP-tool: ' + error);
+    showError('Klarte ikke finne nærmeste luftambulanse');
+  })
+}
+
 
 function startSimulation(features) {
   var url = url_simulator + '/submitJob';
