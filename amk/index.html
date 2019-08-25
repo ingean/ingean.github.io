@@ -53,13 +53,23 @@
         <div id="menu1" class="tab-pane container fade" role="tabpanel">
           <h3>Taktiske analyser</h3>
           <ul class="nav nav-tabs">
-            <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#tool1"><img src="images/spill.png" id="img-zones" class="img-tool" /></a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tool2"><img src="images/roadblock.png" id="img-roadBlock" class="img-tool" /></a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tool3"><img src="images/helikopter.png" id="img-helicopter" class="img-tool" /></a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tool4"><img src="images/missing.png" id="img-missingPerson" class="img-tool" /></a></li>
+            <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#tool1"><img src="images/msg/Ankommet.png" id="img-show3D" class="img-tool" /></a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tool2"><img src="images/spill.png" id="img-zones" class="img-tool" /></a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tool3"><img src="images/roadblock.png" id="img-roadBlock" class="img-tool" /></a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tool4"><img src="images/helikopter.png" id="img-helicopter" class="img-tool" /></a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tool5"><img src="images/missing.png" id="img-missingPerson" class="img-tool" /></a></li>
           </ul>
           <div class="tab-content">
             <div id="tool1" class="tab-pane in active">
+              <h5>Situasjonsbilde</h5>
+              <p>Få oversikt over hendelsesstedet gjennom 3D-visualisering.</p>
+              <a href="https://ingean.github.io/containerhavn/?demo" target="_blank">
+                <button id="btn-show3D" type="button" class="btn btn-primary"> 
+                  Se i 3D
+                </button>
+              </a>            
+            </div>
+            <div id="tool2" class="tab-pane fade">
               <h5>Faresoner</h5>
               <p>Lager hot, warm og cold zone rundt en hendelse basert på forskriften fra DSB.</p>
               <div class="form-group">
@@ -74,14 +84,14 @@
                 Lag sikkerhetssoner
               </button>
             </div>
-            <div id="tool2" class="tab-pane fade">
+            <div id="tool3" class="tab-pane fade">
               <h5>Sperreposter</h5>
               <p>Sette ut sperreposter rundt utslippsområdet for å hindre at uvedkommende kommer i fare.</p>
               <button id="btn-createRoadBlocks" type="button" class="btn btn-primary" onclick="executeRoadCloseGP()"> 
                 Sett ut sperreposter
               </button>
             </div>
-            <div id="tool3" class="tab-pane fade">
+            <div id="tool4" class="tab-pane fade">
               <h5>Luftambulanse</h5>
               <p>Finner nærmeste helikopter basert på avstand, flyhastighet og erfaringstall på reaksjons- og redningstid.</p>
               <div class="form-group">
@@ -95,7 +105,7 @@
                 Nærmeste luftambulanse
               </button>
             </div>
-            <div id="tool4" class="tab-pane fade">
+            <div id="tool5" class="tab-pane fade">
               <h5>Savnet person</h5>
               <p>Finner sannsynlige ruter for personer som er savnet i fjellet.</p>
               <a id="a-missingLink" href="" target="_blank">
