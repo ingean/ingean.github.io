@@ -7,7 +7,8 @@ function init() {
   resetDemo();
   getRoutesSchema();
   getRoadBlockAreaSchema();
-  getHeliSchema()
+  getHeliSchema();
+  $("#a-missingLink").prop('href', url_missingApp);
 }
 
 function getToken(){

@@ -232,13 +232,15 @@ function showHeliRoutes(messages, incidentPoint) {
   for (var i = 0; i < 4; i++) {
     var descr = messages[m[i]].description; 
     var hl = heliLocations[descr.substr(0,descr.indexOf(' ')).replace('\\','')];
-    
+    var driveTime = formatDrivetime(parseHeliTravelTime(messages[m[i] + 3].description));
+
     var route = {
       "attributes": {
         "Name": hl.label,
+        "FacilityRank": i + 1,
         "RouteType":"Helikopter",
         "Destination": incidentPoint.attributes.Name,
-        "Formatted_TravelTime": formatDrivetime(parseHeliTravelTime(messages[m[i] + 3].description))
+        "Formatted_TravelTime": driveTime
       },
       "geometry": {
         "paths": [[[hl.coords[0],hl.coords[1]],[incidentPoint.geometry.x,incidentPoint.geometry.y]]]
@@ -247,6 +249,27 @@ function showHeliRoutes(messages, incidentPoint) {
     routes.push(route);
   }
   addFeatures(url_routes, routes);
+
+  var data = {
+    "f":"JSON",
+    "features": JSON.stringify([{
+      "geometry": incidentPoint.geometry,
+      "attributes": {
+        "Name": routes[0].attributes.Name,
+        "Status":"på vei til",
+        "Destination":incidentPoint.attributes.Name,
+        "Dato": moment().utc().format('YYYY-MM-DDTHH:mm:ss')
+      }
+    }])
+  }
+  
+  $.post(url_messages + '/addFeatures',data)
+    .done(response => {
+      console.log('Successfully added message with helicopter approaching');
+    })
+    .fail(error => {
+      console.log('Failed to update messages with helicopter approaching: ' + error);
+    })
 }
 
 function parseHeliTravelTime(description) {

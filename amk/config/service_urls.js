@@ -46,3 +46,5 @@ const url_responseGP = 'https://demo01.geodata.no/arcgis/rest/services/AMK/Bered
 const url_messages = 'https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/AMK_barriers/FeatureServer/3';
 
 
+//App for finding missing person
+const url_missingApp = 'https://www.vg.no';

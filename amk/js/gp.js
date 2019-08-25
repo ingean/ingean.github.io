@@ -116,7 +116,7 @@ function executeFindHeli() {
         "fields": schema_heliPoint.fields,
         "features": response.features
       }),
-      "Utstyr": "Rescuebag",
+      "Utstyr": $('#select-rescuetype').val(),
       "Mottak": "OUS/Ullevaal"
     }
 
