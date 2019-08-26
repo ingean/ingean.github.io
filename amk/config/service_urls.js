@@ -47,4 +47,4 @@ const url_messages = 'https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/s
 
 
 //App for finding missing person
-const url_missingApp = 'https://www.vg.no';
+const url_missingApp = 'https://testkommune.maps.arcgis.com/apps/webappviewer/index.html?id=32082b2392d3401a8083c8f9248e817f';
