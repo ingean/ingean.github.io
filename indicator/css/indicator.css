@@ -19,3 +19,10 @@
   font-size: xx-large;
   color: green;
 }
+
+.footer {
+  margin-top: 10px;
+  background-color: lightgrey;
+  border: 1em;
+  border-color: darkgray;
+}

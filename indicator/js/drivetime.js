@@ -25,7 +25,7 @@ function getDriveTime() {
   })
   .fail(error => {
     console.log('Not able to get drivetimes from feature service: ' + error);
-    $('#span-status').html();
+    $('#span-status').html(' ');
   });
   setTimeout(() => {getDriveTime()},refreshRate);
 };
