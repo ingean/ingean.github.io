@@ -232,13 +232,15 @@ function showHeliRoutes(messages, incidentPoint) {
   for (var i = 0; i < 4; i++) {
     var descr = messages[m[i]].description; 
     var hl = heliLocations[descr.substr(0,descr.indexOf(' ')).replace('\\','')];
-    var driveTime = formatDrivetime(parseHeliTravelTime(messages[m[i] + 3].description));
+    var driveTime = formatDrivetime(parseHeliMessage(messages[m[i] + 3].description));
+    var distance = Number(parseHeliMessage(messages[m[i] + 2].description));
 
     var route = {
       "attributes": {
         "Name": hl.label,
         "FacilityRank": i + 1,
         "RouteType":"Helikopter",
+        "Total_Kilometers": distance,
         "Destination": incidentPoint.attributes.Name,
         "Formatted_TravelTime": driveTime
       },
@@ -272,9 +274,9 @@ function showHeliRoutes(messages, incidentPoint) {
     })
 }
 
-function parseHeliTravelTime(description) {
+function parseHeliMessage(description) {
   var start = description.indexOf(':') + 1;
-  var end = description.indexOf('m') - start;
+  var end = description.indexOf('.') - start + 2;
   
   return Number(description.substr(start, end).trim());
 }
