@@ -17,7 +17,7 @@ function getDriveTime() {
     var features = response.features;
     if (features.length > 0) {
       var driveTime = features[0].attributes.Formatted_TravelTime;
-      if($('#div-currentDriveTime').html() !== driveTime) {
+      if($('#div-currentDriveTime').html() !== driveTime + ' min') {
         $('#div-previousDriveTime').html($('#div-currentDriveTime').html());
         $('#div-currentDriveTime').html(driveTime + ' min');
       }
