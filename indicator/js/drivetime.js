@@ -16,8 +16,11 @@ function getDriveTime() {
     response = JSON.parse(response);
     var features = response.features;
     if (features.length > 0) {
-      $('#div-previousDriveTime').html($('#div-currentDriveTime').html());
-      $('#div-currentDriveTime').html(features[0].attributes.Formatted_TravelTime + ' min');
+      var driveTime = features[0].attributes.Formatted_TravelTime;
+      if($('#div-currentDriveTime').html() !== driveTime) {
+        $('#div-previousDriveTime').html($('#div-currentDriveTime').html());
+        $('#div-currentDriveTime').html(driveTime + ' min');
+      }
     }
   })
   .fail(error => {
