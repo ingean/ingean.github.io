@@ -112,7 +112,6 @@ function replaceAttributes(features, attributes, wkid) {
 }
 
 function resetResources() {
-  console.log('Resetting resources to start position and status');
   var data = {
     "f":"json",
     "features": JSON.stringify(init_amb)
