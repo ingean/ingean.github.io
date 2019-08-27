@@ -24,7 +24,7 @@ function dispatchStandby() {
     
   })
   .catch(error => {
-    console.log('Not able to get features to make routes: ' + error);
+    console.log('ERROR: Not able to get features to make routes: ' + error);
     showError('Not able to get features to make routes');
   })
 }
@@ -32,12 +32,12 @@ function dispatchStandby() {
 function submitVRP(data) {
   $.post(url_VRP + '/submitJob', data)
   .done(response => {
-    console.log('VRP job submitted successfully, check job status:');
+    console.log('SUCCESS: VRP job submitted, check job status: ');
     console.log(url_VRP + '/jobs/' + response.jobId + '?f=pjson&token=' + TOKEN);
     checkVRPJob(response.jobId);
   })
   .fail(error => {
-    console.log('Failed to submit job to allocate facilities to incidents: ' + error);
+    console.log('ERROR: Failed to submit job to allocate facilities to incidents: ' + error);
     showError('Failed to submit job to allocate facilities to incidents');
   });
 }
@@ -78,7 +78,7 @@ function checkVRPJob(jobId, freq = 5000, maxQueries = 50) {
         }, freq);
       } else if(response.jobStatus === 'esriJobFailed') {
         btnSpinner(false);
-        console.log('VRP failed with the following messages: ' + response.messages);
+        console.log('ERROR: VRP failed with the following messages: ' + response.messages);
         showError('Failed to allocate resources to standby points');
       } else {
         btnSpinner(false);
@@ -86,10 +86,10 @@ function checkVRPJob(jobId, freq = 5000, maxQueries = 50) {
       }
     })
     .fail(error => {
-      console.log('Failed to get job status: ' + error);
+      console.log('ERROR: Failed to get job status: ' + error);
     })
   } else {
-    console.log('GP tool timed out');
+    console.log('INFO: VRP-tool status check timed out');
     btnSpinner(false);
   }
 }
@@ -102,7 +102,7 @@ function getVRPRoutes(url_job, url_results_routes) {
     startSimulation(routes);
   })
   .fail(error => {
-    console.log('Failed to get routes from VRP result');
+    console.log('ERROR: Failed to get routes from VRP result');
     showError('Failed to get routes from VRP result');
   })
 }

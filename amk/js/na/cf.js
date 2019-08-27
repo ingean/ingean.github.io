@@ -31,7 +31,7 @@ function executeClosestFacility(data) {
     startSimulation(routes);
   })
   .fail(error => {
-    console.log('Failed to find closest facilities: ' + error);
+    console.log('ERROR: Failed to find closest facilities: ' + error);
     showError('Failed to find closest facilities');
   })  
 }

@@ -1,5 +1,11 @@
 var TOKEN = '';
 var schema_routes = {};
+var schema_cbrne = [
+  {"name":"objectid","type":"esriFieldTypeOID","alias":"objectid","editable":false,"nullable":false,"description":null,"domain":null},
+  {"name":"type","type":"esriFieldTypeString","alias":"type","length":256,"editable":true,"nullable":true,"description":null,"domain":null},
+  {"name":"beskrivelse","type":"esriFieldTypeString","alias":"beskrivelse","length":50,"editable":true,"nullable":true,"description":null,"domain":null},
+  {"name":"name","type":"esriFieldTypeString","alias":"name","length":50,"editable":true,"nullable":true,"description":null,"domain":null}
+];
 var schema_roadblockArea = {};
 var schema_heliPoint = {};
 
@@ -115,10 +121,10 @@ function resetResources() {
   var url = removeUrlQuery(url_resources.url) + '/updateFeatures';
   
   $.post(url,data).done(response => {
-    console.log('Resource positions and status are reset');
+    console.log('SUCCESS: Resource positions and status are reset');
   })
   .fail(error => {
-    console.log('Failed to reset resources: ' + error);
+    console.log('ERROR: Failed to reset resources: ' + error);
     showError('Failed to reset resources');
   });
 }
@@ -132,10 +138,10 @@ function resetStandby() {
   }
   $.post(url + '/calculate', data)
   .done(response => {
-    console.log('Successful reset of standby points status');
+    console.log('SUCCESS: Standby points status is reset');
   })
   .fail(error => {
-    console.log('Resetting standby points statuses failed: ' + error);
+    console.log('ERROR: Resetting standby points statuses failed: ' + error);
     showError('Klarte ikke å tilbakestille status på beredskapspunkter');
   })
 }
@@ -156,7 +162,7 @@ function addBarriers(params) {
           if(responses[i] > 0) {
             params[params_barriers[i]] = JSON.stringify(url_barriers[i]);
           } else {
-            console.log(params_barriers[i] + ' is referencing an empty feature service and not used in analysis');
+            console.log('INFO: ' + params_barriers[i] + ' is referencing an empty feature service and not used in analysis');
           }
         }
         resolve(params);
@@ -191,14 +197,14 @@ function addIncidentMessage() {
 
     $.post(url_messages + '/addFeatures',data)
     .done(response => {
-      console.log('Successfully added message with incident');
+      console.log('SUCCESS: Added message with incident');
     })
     .fail(error => {
-      console.log('Failed to update messages with incident: ' + error);
+      console.log('ERROR: Failed to update messages with incident: ' + error);
     })
   })
   .fail(error => {
-    console.log('Failed to get incident feature: ' + error);
+    console.log('ERROR: Failed to get incident feature: ' + error);
   })
   
   
@@ -208,14 +214,14 @@ function addIncidentMessage() {
 function addTimeofDay(params, timekey = 'timeOfDay') {
   if($("#switch-liveTraffic").is(':checked')) {
     params[timekey] = moment($('#input-date').val()).valueOf();
-    console.log('Time of analysis (real time): ' + moment(params[timekey]).format('DD.MM.YYYY HH:mm:ss') + ', EPOC (milliseconds): ' + params[timekey]);
+    console.log('INFO: Time of analysis (real time): ' + moment(params[timekey]).format('DD.MM.YYYY HH:mm:ss') + ', EPOC (milliseconds): ' + params[timekey]);
     return params;
   } else {
     var timestring = moment(historicTimes[$('#select-weekday').val()],'DD.MM.YYYY').format('DD.MM.YYYY') + 
                     'T' + 
                     moment($('#input-date').val()).format('HH:00:00'); 
     params[timekey] = moment(timestring,'DD.MM.YYYYTHH:mm:ss').valueOf();
-    console.log('Time of analysis (historic): ' + moment(params[timekey]).format('DD.MM.YYYY HH:mm:ss') + ', EPOC (milliseconds): ' + params[timekey]);
+    console.log('INFO: Time of analysis (historic): ' + moment(params[timekey]).format('DD.MM.YYYY HH:mm:ss') + ', EPOC (milliseconds): ' + params[timekey]);
     return params;
   }
 }
@@ -267,10 +273,10 @@ function showHeliRoutes(messages, incidentPoint) {
   
   $.post(url_messages + '/addFeatures',data)
     .done(response => {
-      console.log('Successfully added message with helicopter approaching');
+      console.log('SUCCESS: Added message with helicopter approaching');
     })
     .fail(error => {
-      console.log('Failed to update messages with helicopter approaching: ' + error);
+      console.log('ERROR: Failed to update messages with helicopter approaching: ' + error);
     })
 }
 

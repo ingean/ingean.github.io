@@ -8,14 +8,14 @@ function findStandby() {
 
  $.get(url)
   .done(response => {
-    console.log('Submitted request for location allocation successfully, check job status:');
+    console.log('SUCCESS: Submitted request for location allocation, check job status:');
     console.log(url_locationAllocation + '/jobs/' + response.jobId + '?f=pjson');
     checkGPJob(url_locationAllocation, response.jobId, 1000, 200, function(response) {
       //Do something while executing
     });
   })
   .fail(error => {
-    console.log('Failed to find standby locations: ' + error);
+    console.log('ERROR: Failed to find standby locations: ' + error);
     showError('Failed to find standby locations');
   })
 }
@@ -25,12 +25,14 @@ function executePlume() {
   $.get(url_incident.url + '&outSR=25833')
   .done(response => {
     response = JSON.parse(response);
-    var name = response.features[0].attributes.name;
-    var features = replaceAttributes(response.features, {"objectid":1,"type": "Gass: Giftig 2", "beskrivelse": "","name":name},25833);
+    var name = response.features[0].attributes.Name;
+    response.features[0].attributes = {"objectid":1,"type": "Gass: Giftig 2", "beskrivelse": null,"name":name};
+    
+    //var features = replaceAttributes(response.features, {"objectid":1,"type": "Gass: Giftig 2", "beskrivelse": null,"name":name},25833);
     
     var cbrne_point = {
-      "fields": schema_cbrne.fields,
-      "features": features,
+      "fields": schema_cbrne,
+      "features": response.features,
       "geometryType": "esriGeometryPoint",
       "sr":{"wkid":25833,"latestWkid":25833}
     }
@@ -38,7 +40,7 @@ function executePlume() {
     var cbrne_input = {
       "env:outSR": 25833,
       "Senterpunkt": JSON.stringify(cbrne_point),
-      "Vind_fra_YR_no": schema_cbrne.geometryType,
+      "Vind_fra_YR_no": false,
       "Brukerdefinert_vindretning": "NE",
       "Brukerdefinert_vindstyrke": 15,
       "Beskrivelse": $('#select-plume-type').val(),
@@ -47,14 +49,14 @@ function executePlume() {
   
     $.post(url_plumeGP + '/submitJob?f=json', cbrne_input)
     .done(response => {
-      console.log('Submitted request for plume successfully, check job status: ');
+      console.log('SUCCESS: Submitted request for plume successfully, check job status: ');
       console.log(url_plumeGP + '/jobs/' + response.jobId + '?f=pjson');
       checkGPJob(url_plumeGP, response.jobId, 1000, 50, function(response) {
         //Do something while executing
       });
     })
     .fail(error => {
-      console.log('Failed to create plumes: ' + error);
+      console.log('ERROR: Failed to create plumes: ' + error);
       showError('Failed to create plumes');  
     })
   })
@@ -80,19 +82,19 @@ function executeRoadCloseGP() {
 
     $.post(url_roadcloseGP + '/submitJob?f=json',data)
     .done(response => {
-      console.log('Submitted request for roadblocks successfully, check job status: ');
+      console.log('SUCCESS: Submitted request for roadblocks successfully, check job status: ');
       console.log(url_roadcloseGP + '/jobs/' + response.jobId + '?f=pjson');
       checkGPJob(url_roadcloseGP, response.jobId, 1000, 50, function(response) {
         //Do something while executing
       });
     })
     .fail(error => {
-      console.log('Failed to submit request for roadblocks: ' + error);
+      console.log('ERROR: Failed to submit request for roadblocks: ' + error);
       showError('Failed to create roadblocks');
     })
   })
   .fail(error => {
-    console.log('Failed to get plume polygon for use as input to roadblocks GP-tool: ' + error);
+    console.log('ERROR: Failed to get plume polygon for use as input to roadblocks GP-tool: ' + error);
     showError('Failed to create roadblocks');
   })
 }
@@ -122,16 +124,16 @@ function executeFindHeli() {
 
     $.post(url_heliGP + '/execute?f=json',data)
     .done(response => {
-      console.log('Executed closest helicopter successfully');
+      console.log('SUCCESS: Executed closest helicopter successfully');
       showHeliRoutes(response.messages, incidentPoint);
     })
     .fail(error => {
-      console.log('Failed to execute find closest helicopter: ' + error);
+      console.log('ERROR: Failed to execute find closest helicopter: ' + error);
       showError('Klarte ikke finne nærmeste luftambulanse');
     })
   })
   .fail(error => {
-    console.log('Failed to get incident for use as input to find closest helicopter GP-tool: ' + error);
+    console.log('ERROR: Failed to get incident for use as input to find closest helicopter GP-tool: ' + error);
     showError('Klarte ikke finne nærmeste luftambulanse');
   })
 }
@@ -166,14 +168,14 @@ function startSimulation(features) {
   //console.log(JSON.stringify(data.Linjer));
   $.post(url,data)
   .done(response => {
-    console.log('Submitted request for starting simulation successfully, check job status:');
+    console.log('SUCCESS: Submitted request for starting simulation, check job status:');
     console.log(url_simulator + '/jobs/' + response.jobId + '?f=pjson');
     checkGPJob(url_simulator, response.jobId, 1000, 50, function(response) {
       //Do something while executing
     });
   })
   .fail(error => {
-    console.log('Failed to submit features to GeoEvent simulator: ' + error);
+    console.log('ERROR: Failed to submit features to GeoEvent simulator: ' + error);
     showError('Failed to submit features to GeoEvent simulator');  
   })
 }
@@ -188,7 +190,7 @@ function startResponseGrid() {
   $.post(url,data)
   .done(response => {
     $('#span-iterationCount').html('Starter'); //Viser indikator på at Beredskapsgridet starter
-    console.log('Submitted request for starting responsegrid script successfully, check job status:');
+    console.log('SUCCESS: Submitted request for starting responsegrid script, check job status:');
     console.log(url_responseGP + '/jobs/' + response.jobId + '?f=pjson');
     var iterations = Number($('#input-gridIterations').val()) + 100;
     checkGPJob(url_responseGP, response.jobId, 6000, iterations, function(response) {
@@ -207,7 +209,7 @@ function startResponseGrid() {
     });
   })
   .fail(error => {
-    console.log('Failed to submit responsegrid script startup: ' + error);
+    console.log('ERROR: Failed to submit responsegrid script startup: ' + error);
     showError('Oppstart av beredskapsgrid feilet'); 
   })
 }
@@ -225,19 +227,19 @@ function checkGPJob(url_GPservice, jobId, freq, maxQueries, callback) {
         }, freq);
       } else if(response.jobStatus === 'esriJobFailed') {
         btnSpinner(false);
-        console.log('GP-tool failed with the following messages: ' + JSON.stringify(response.messages));
+        console.log('ERROR: GP-tool failed with the following messages: ' + JSON.stringify(response.messages));
         showError('Failed to run GP-tool');
       } else {
         btnSpinner(false);
         $('#span-iterationCount').html('');
-        console.log('GP-tool finished successfully');
+        console.log('SUCCESS: GP-tool finished');
       }
     })
     .fail(error => {
-      console.log('Failed to get job status: ' + error);
+      console.log('ERROR: Failed to get job status: ' + error);
     })
   } else {
-    console.log('GP tool job status check timed out');
+    console.log('INFO: GP tool job status check timed out');
     btnSpinner(false);
   }
 }
