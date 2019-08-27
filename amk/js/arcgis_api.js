@@ -1,15 +1,19 @@
 function deleteAllFeatures(url, featurename = 'features') {
+ deleteFeatures(url,'1=1',featurename);
+}
+
+function deleteFeatures(url, where, featurename = 'features') {
   var data = {
-    "where":"1=1"
+    "where": where
   };
   
   $.post(url + '/deleteFeatures?f=json', data)
   .done(response => {
-    console.log('All existing ' + featurename + ' deleted');
+    console.log('SUCCESS: ' + featurename + ' deleted');
   })
   .fail(error => {
-    console.log('Failed to delete all ' + featurename + ' :' + error);
-    showError('Failed to delete all ' + featurename);
+    console.log('ERROR: Failed to delete ' + featurename + ' :' + error);
+    showError('Failed to delete ' + featurename);
   })
 }
 
@@ -21,10 +25,10 @@ function addFeatures(url, features) {
   $.post(url + '/addFeatures', data)
   .done(response => {
     btnSpinner(false);
-    console.log('Features added successfully');
+    console.log('SUCCESS: Features added successfully');
   })
   .fail(error => {
-    console.log('Failed to add features to feature service: ' + error);
+    console.log('ERROR: Failed to add features to feature service: ' + error);
     showError('Failed to add features to feature service');
   })
 }

@@ -42,7 +42,7 @@ function resetDemo() {
   deleteAllFeatures(url_routes, 'routes');
   deleteAllFeatures(url_messages, 'messages');
   deleteAllFeatures(url_roadcloseResults, 'roadblocks');
-  deleteAllFeatures(url_plumeResult, 'plumes');
+  deleteFeatures(url_plumeResult, "name <> 'permanent'", 'plumes');
 
   resetResources();
   resetStandby();
