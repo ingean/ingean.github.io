@@ -31,6 +31,13 @@ require([
     id: "GeocacheLandskap"
   });
 
+  var imagePopupTemplate = {
+    title: "Terrengmodell over Norge",
+    content:
+      "Visning: <b>{Raster.ServicePixelValue} </b>" +
+      "<br>Høyde over havet: <b>{Raster.ItemPixelValue}m </b>"
+  };
+
   var layer = new ImageryLayer({
     url: urlGeomapDTM,
     renderingRule: reliefRFT,
@@ -61,13 +68,6 @@ require([
       actions: []
     }
   });
-  
-  var imagePopupTemplate = {
-    title: "Terrengmodell over Norge",
-    content:
-      "Visning: <b>{Raster.ServicePixelValue} </b>" +
-      "<br>Høyde over havet: <b>{Raster.ItemPixelValue} </b>"
-  };
 
   var slopeRFT = new RasterFunction({
     functionName: "Slope_Degrees",
