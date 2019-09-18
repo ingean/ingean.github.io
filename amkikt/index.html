@@ -8,6 +8,7 @@
     />
     <title>AMK - kjøretidsanalyser</title>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://js.arcgis.com/4.12/esri/themes/light/main.css" />
     <link rel="stylesheet" type="text/css" href="css/na.css" />
 
@@ -15,42 +16,87 @@
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/lib/moment.loc.min.js"></script>
     <script src="https://js.arcgis.com/4.12/"></script>
+    <script type="text/javascript" src="js/config/urls.js"></script>
     <script type="text/javascript" src="js/routes.js"></script>
     <script type="text/javascript" src="js/closestFacility.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
   </head>
   <body>
     <div id="viewDiv"></div>
     <div id="div-widget-ui" class="esri-widget">
       <b>Kjøretidsanalyser</b><br/>
-      <br />Funksjoner:
+      <br />Kjøretidsanalyser:
       <div class="na-options">
         <button
-          class="esri-widget--button rasterfunction-button"
+          class="esri-widget--button"
           id="button-closestfacility"
-          value="Closest Facility"
           title="Finn nærmeste"
         ><img class="img-btn" src="images/routing.png" />
         </button>
         <button
-          class="esri-widget--button rasterfunction-button"
+          class="esri-widget--button"
           id="button-locationallocation"
-          value="Location Allocation"
           title="Ressursoptimalisering"
         ><img class="img-btn" src="images/location.png" />
         </button>
         <button
-          class="esri-widget--button rasterfunction-button"
+          class="esri-widget--button"
           id="button-vehiclerouting"
-          value="Vehicle Routing Problem"
           title="Forflytningsoppdrag"
         ><img class="img-btn" src="images/dispatch.png" />
         </button>
         <button
-          class="esri-widget--button rasterfunction-button"
+          class="esri-widget--button"
+          id="button-dispatch"
+          title="Start simulator"
+          disabled="true"
+        ><img class="img-btn" src="images/ambulance.png" />
+        </button>
+      </div>
+      <br />Taktiske analyser:
+      <div class="na-options">
+        <button
+          class="esri-widget--button"
+          id="button-plume"
+          title="Utslippsområde"
+          disabled="true"
+        ><img class="img-btn" src="images/spill.png" />
+        </button>
+        <button
+          class="esri-widget--button"
+          id="button-roadblock"
+          title="Sett ut sperreposter"
+        ><img class="img-btn" src="images/roadblock.png" />
+        </button>
+        <button
+          class="esri-widget--button"
+          id="button-heli"
+          title="Finn helikopter"
+        ><img class="img-btn" src="images/heli.png" />
+        </button>
+        <button
+          class="esri-widget--button"
+          id="button-missing"
+          title="Finn savnet"
+        ><img class="img-btn" src="images/missing.png" />
+        </button>
+      </div>
+      <br />Innstillinger:
+      <div class="na-options">
+        <button
+          class="esri-widget--button"
+          id="button-reset"
+          title="Tilbakestill demo"
+          disabled="true"
+        ><img class="img-btn" src="images/refresh.png" />
+        </button>
+        <button
+          class="esri-widget--button"
           id="button-startresponseindex"
-          value="Start Index"
           title="Start beredskapsindeks"
         ><img class="img-btn" src="images/settings.png" />
         </button>
