@@ -8,3 +8,4 @@ const url_Token = 'https://www.arcgis.com/sharing/rest/oauth2/token';
 
 //GP services
 const url_evacGP = 'http://demo09.geodata.no/arcgis/rest/services/GP_Tjenester/UMS_Evakuering_GP/GPServer/UMS%20Evakuering';
+const evacIter = 10;

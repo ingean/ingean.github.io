@@ -14,20 +14,20 @@ function startEvac(iter = evacIter) {
       var gpIter = 1;
       var messages = response.messages;
       for(var i = 0; i < messages.length; i++) {
-        if(messages[i].description.length < 4) {
+        if(messages[i].description.includes("Iterasjon")) {
           gpIter++;
-          $('#span-iterationCount').html(
-            gpIter + 
-            ' av ' +
-            $('#input-gridIterations').val() 
-          );
+          $('#span-iterationCount').html(gpIter + ' av ' + iter);
+        }
+        if(messages[i].description.includes("Completed")) {
+          $('#span-iterationCount').html('Ferdig');
         }
       }
     });
   })
   .fail(error => {
+    $('#span-iterationCount').html('Evakuering feilet');
     console.log('ERROR: Failed to submit evacuation GP: ' + error);
-    showError('Oppstart av evakuering feilet'); 
+    //showError('Oppstart av evakuering feilet'); 
   })
 }
 
