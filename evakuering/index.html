@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--meta name="viewport" content="width=device-width, initial-scale=1"-->
+    <!--meta name="viewport" content="width=420, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,target-densitydpi=device-dpi, user-scalable=no" -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <title>Kjøretidsanalyser</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/amk.css">
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/lib/moment.loc.min.js"></script>
+    <script type="text/javascript" src="js/lib/bootstrap-notify.min.js"></script>
+    <script type="text/javascript" src="config/service_urls.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+    <script type="text/javascript" src="js/arcgis_api.js"></script>
+    <script type="text/javascript" src="js/evac.js"></script>
+    <script type="text/javascript" src="js/gp.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h3>Evakuering</h3>
+      <p>Følg evakuering i sanntid</p>
+      <button id="btn-startEvac" type="button" class="btn btn-primary" onclick="startEvac()">Start evakuering</button>
+    </div>
+    <div class="footer container">
+      <span id="span-iterationCount" class="badge badge-success"></span>
+      <img src="images/refresh.png" id="img-reset" class="img-tool pull-right" onclick="resetDemo()" >
+    </div>
+  </body>
+</html> 

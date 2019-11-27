@@ -1,0 +1,39 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Strekningsfoto</title>
+    <link 
+      rel="stylesheet" 
+      type="text/css" 
+      href="https://js.arcgis.com/4.12/esri/themes/light/main.css">
+    <link 
+      rel="stylesheet" 
+      type="text/css" 
+      href="css/compare.css"
+    />
+	  
+	  <script src="https://js.arcgis.com/4.12/"></script>
+    <script src="js/compare.js"></script>
+  </head>
+  <body>
+    <button type="button" id="left" onclick="javascript:previous();">Forrige</button>
+    <button type="button" id="right" onclick="javascript:next();">Neste</button>
+    <table>
+      <tr height="389px" >
+        <td>
+          <img id="image" alt="bilde" />
+        </td>
+      </tr>
+      <tr height="389px" >
+        <td>
+          <span id="div-view" class="div-view"></span>
+        </td>
+      </tr>
+	  </table>
+  </body>
+</html>
