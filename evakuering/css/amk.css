@@ -1,3 +1,9 @@
+body {
+  background-color: black;
+  color: grey;
+}
+
+
 .input-number {
   border: none;
   border-width: 0px;
@@ -26,7 +32,7 @@
 
 .footer {
   margin-top: 10px;
-  background-color: lightgrey;
+  background-color: gray;
   border: 1em;
   border-color: darkgray;
 }
