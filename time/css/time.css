@@ -1,0 +1,26 @@
+body {
+  background: black;
+}
+
+.datetime {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.clock {
+  color: #FF4138;
+  font-size: 40px;
+  font-family: Orbitron;
+  letter-spacing: 7px;
+  text-align: center;
+}
+
+.date {
+  color: #26929B;
+  font-size: 20px;
+  font-family: Orbitron;
+  letter-spacing: 7px;
+  text-align: center;
+}
