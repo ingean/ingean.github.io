@@ -29,3 +29,16 @@ function showTime() {
 }
 
 showTime();
+
+
+function getURLParameters() {
+  var search = location.search.substring(1);
+  return JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
+}
+
+window.onload = function() {
+  var urlParams = getURLParameters();
+  document.body.style.background = '#' + urlParams.bgColor;
+  document.getElementById('timeDisplay').style.color = '#' + urlParams.timeColor;
+  document.getElementById('dateDisplay').style.color = '#' + urlParams.dateColor;
+}
