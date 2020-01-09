@@ -24,7 +24,20 @@
   <body>
     <div class="container d-flex h-100">
       <div class="row justify-content-center align-self-center w-100">
-        <button id="btnReset" type="button" class="btn btn-warning" onclick="reset()">Nytt skift</button>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary active">
+            <input type="radio" name="options" id="optDay" value="2" autocomplete="off" checked> Dag
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="options" id="optEve" value="3" autocomplete="off"> Kveld
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="options" id="optNight" value="4" autocomplete="off"> Natt
+          </label>
+        </div>
+        <div>
+          <button id="btnReset" type="button" class="btn btn-warning" onclick="reset()">+</button>
+        </div>
       </div>
     </div>
   </body>

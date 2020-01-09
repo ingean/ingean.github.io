@@ -3,6 +3,11 @@ body, html {
   background-color: black;
 }
 
+#btnReset {
+  margin-left: 10px;
+  font-weight: bold;
+}
+
 #spinner-loading {
   margin-left: 5px;
 }
