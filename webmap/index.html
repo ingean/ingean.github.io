@@ -54,6 +54,23 @@
           map: webmap,
           container: "viewDiv"
         });
+
+        view.watch("widthBreakpoint",function(breakpoint){
+          switch (breakpoint) {
+            case "xsmall":
+            view.height = 1000;
+              break;
+            case "small":
+            view.height = 1000;
+              break;
+            case "medium":
+            case "large":
+            case "xlarge":
+            // do something else
+              break;
+            default:
+          }
+        });
       });
     </script>
   </head>
