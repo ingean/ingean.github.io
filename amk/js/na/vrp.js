@@ -1,14 +1,26 @@
-function dispatchStandby() {
+async function dispatchStandby() {
   btnSpinner(true, '#btn-dispatchStandby');
   deleteAllFeatures(url_routes, 'routes');
   
+  let orders = await $.get(incidentsList[1]);
+  orders = {
+    type: 'features',
+    features: orders.features
+  }
+
+  let depots = await $.get(url_resources);
+  depots = {
+    type: 'features',
+    features: depots.features
+  }
+
   createVRPRoutes(url_resources.url)
   .then(routes => {
     var params = {
       "f":"json",
       "token": TOKEN,
-      "orders": JSON.stringify(incidentsList[1]),
-      "depots": JSON.stringify(url_resources),
+      "orders": JSON.stringify(orders),
+      "depots": JSON.stringify(depots),
       "routes": JSON.stringify(routes),
       "impedance": "TravelTime",
       "env:outSR": 25833,
@@ -27,6 +39,14 @@ function dispatchStandby() {
     console.log('ERROR: Not able to get features to make routes: ' + error);
     showError('Not able to get features to make routes');
   })
+}
+
+async function getOrders(url) {
+  let response = await $.get(url);
+  return {
+    type: 'features',
+    features: response.features
+  }
 }
 
 function submitVRP(data) {

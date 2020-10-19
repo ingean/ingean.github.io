@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Beredskap | Kjøretidsberegninger og beredskapsdekning</title>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.16/esri/themes/light/main.css"
+    />
+    <link rel="stylesheet" type="text/css" href="css/drivetime.css" />
+    <script src="https://js.arcgis.com/4.16/"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+    <div id="div-na-selector" class="esri-widget">
+      <b>Velg kjøretidsanalyse</b><br/>
+      <br />Funksjoner:
+      <div class="na-options">
+        <button
+          class="esri-widget--button na-button"
+          id="button-na-routing"
+          value="Route"
+          title="Finn kjørerute"
+        ><img class="img-btn" src="images/route.png" /></button>
+        <button
+          class="esri-widget--button na-button"
+          id="button-na-closestFacility"
+          value="Closest_Facility"
+          title="Finn nærmeste"
+        ><img class="img-btn" src="images/route.png" /></button>
+        <button
+          class="esri-widget--button na-button"
+          id="button-na-serviceArea"
+          value="Dynamic_Height"
+          title="ServiceArea"
+        ><img class="img-btn" src="images/route.png" /></button>
+        <button
+          class="esri-widget--button na-button"
+          id="button-na-locationAllocation"
+          value="LocationAllocation"
+          title="Finn beredskapspunkt"
+        ><img class="img-btn" src="images/route.png" /></button>
+      </div>
+      <br />
+      <input id="input-date" type="datetime-local">
+      <br />
+    </div>
+  </body>
+</html>
