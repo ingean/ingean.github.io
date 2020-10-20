@@ -1,25 +1,14 @@
 require([
-  "esri/Map",
   "esri/views/MapView",
+  "esri/WebMap",
   "esri/geometry/Extent",
-  "esri/Basemap",
-  "esri/layers/TileLayer",
-  "esri/layers/VectorTileLayer",
   "esri/core/watchUtils"
-], function(Map, MapView, Extent, Basemap, TileLayer, VectorTileLayer, watchUtils) {
+], function(MapView, WebMap, Extent, watchUtils) {
 
-var gdoBasemaps = [
-  'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheBasis/MapServer',
-  'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheGraatone/MapServer',
-  'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheLandskap/MapServer',
-  'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheHybrid/MapServer',
-  'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheBilder/MapServer'
-];
-
-  var view0 = createView('div-view0',0);
-  var view1 = createView('div-view1',1);
-  var view2 = createView('div-view2',2);
-  var view3 = createView('div-view3',3);
+  var view0 = createView('div-view0',"10edb55b029c4c888ae4eebd69d3113f"); // Basis webmap
+  var view1 = createView('div-view1',"f5b56e0174af47afa02321af33001906"); // Grey webmap
+  var view2 = createView('div-view2',"c65fbe3347064b29aff5ac38a6f20e16"); // Dark webmap
+  var view3 = createView('div-view3',"a189d190119f4c54a1f4169047b115ad"); // Imagery webmap
 
   var synchronizeView = function(view, others) {
     others = Array.isArray(others) ? others : [others];
@@ -117,31 +106,8 @@ var gdoBasemaps = [
   // bind the views
   synchronizeViews([view0, view1, view2, view3]);
 
-  function createView(mapDiv, i) {
-    var rtLayer2 = new TileLayer({
-      url: gdoBasemaps[4]
-    });
-
-    var rtLayer = new TileLayer({
-      url: gdoBasemaps[i]
-    });
-
-    var layers = [];
-
-    if (i === 3) {
-      layers.push(rtLayer2, rtLayer);
-    } else {
-      layers.push(rtLayer);
-    }
-  
-    var basemap = new Basemap({
-      baseLayers: layers,
-      title: "Geodata Bakgrunnskart",
-      id: "gdo_" + String(i)
-    });
-        
-    var map = new Map({ basemap: basemap });
-    var extent = new Extent({
+  function createView(mapDiv, mapId) {
+    let extent = new Extent({
       xmin: 257000,
       ymin: 6643100,
       xmax: 267000,
@@ -150,14 +116,17 @@ var gdoBasemaps = [
         wkid: 25833
       }
     });
-
+    
+    let webmap = new WebMap({
+      portalItem: {
+        id: mapId
+      }
+    });
+  
     return new MapView({
       container: mapDiv, 
-      map: map,
-      extent: extent
-      
-      //center: [7, 62],
-      //zoom: 4
+      map: webmap,
+      extent: extent 
     });
   }
 })
