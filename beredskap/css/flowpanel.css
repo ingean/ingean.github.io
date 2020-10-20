@@ -1,0 +1,63 @@
+:root {
+  --flow-color-fg: #404040;
+  --flow-color-bg: white;
+  --flow-color-fg-hover: #f3f3f3;
+  --flow-color-bg-hover: #2b2b2b;
+  --flow-color-fg-active: #59d6ff;
+  --flow-color-bg-active: #151515;
+}
+
+.flow-panel {
+  display: flex;
+  flex: 0 0 17em; /* Fixed width */
+  flex-direction: column;
+  background-color: var(--flow-color-bg);
+  height: 100%
+}
+
+.flow-panel-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 1em;
+}
+
+.heading {
+  color: var(--flow-color-fg);
+  font-size: large;
+  font-weight: bold;
+}
+
+.flow-panel-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  margin-top: 1em;
+}
+
+.panel-list-item {
+  display: flex;
+  flex-direction: row;
+  color: var(--flow-color-fg);
+  width: 100%;
+  border-bottom: 1px solid;
+  margin: 1em;
+  font-size: small;
+}
+
+.left {
+  margin-left: auto;
+}
+
+#panel-stops {
+  display: none;
+}
+
+#panel-routes {
+  display: none;
+}
+
+#panel-closestFacility {
+  display: none;
+}
