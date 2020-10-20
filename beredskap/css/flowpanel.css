@@ -19,13 +19,13 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  margin: 1em;
 }
 
 .heading {
   color: var(--flow-color-fg);
   font-size: large;
   font-weight: bold;
+  margin: 1em;
 }
 
 .flow-panel-list {

@@ -42,26 +42,31 @@ require([
   calcite.init();
 
   document
-  .getElementById("btn-deleteStops")
-  .addEventListener("click", deleteStops);
+  .getElementById('btn-deleteStops')
+  .addEventListener('click', deleteAll);
 
   document
   .getElementById('btn-closestFacility')
   .addEventListener('click', executeClosestFacility);
 
+  document
+  .getElementById('check-barriers')
+  .addEventListener('change', executeAnalysis);
+
+  document
+  .getElementById('check-time')
+  .addEventListener('change', executeAnalysis);
+
+  document
+  .getElementById('r-route')
+  .addEventListener('change', deleteAll);
+
+  document
+  .getElementById('r-area')
+  .addEventListener('change', deleteAll);
+
   let t = new Date(Date.now());
   document.getElementById('startTime').value = ('0' + String(t.getHours())).slice(-2) + ':' + ('0' + String(t.getMinutes())).slice(-2);
-
-  function deleteStops(event) {
-    saLayer.removeAll();
-    routeLayer.removeAll();
-    routeParams.stops.features = []; //Remove stops from analysis;
-    let stops = document.getElementById("list-stops");
-    stops.innerHTML = '';
-
-    let routes = document.getElementById("list-routes");
-    routes.innerHTML = '';
-  }
 
 
   // Point the URL to a valid route service that uses an
@@ -80,7 +85,7 @@ require([
   });
     
   var routeLayer = new GraphicsLayer();
-  var saLayer = new GraphicsLayer();
+  var stopsLayer = new GraphicsLayer();
   
   var routeParams = new RouteParameters({
     stops: new FeatureSet(),
@@ -111,7 +116,7 @@ require([
   });
 
   webmap.add(routeLayer);
-  webmap.add(saLayer);
+  webmap.add(stopsLayer);
 
   var view = new MapView({
     container: "viewDiv", // Reference to the scene div created in step 5
@@ -148,38 +153,18 @@ require([
   view.ui.add(expandEdit, "top-right");
   view.ui.add(expandLayerList, "top-right");
 
-  view.on("click", executeAnalysis); //Run routing or service area when user clicks in map
+  view.on("click", addStop); //Run routing or service area when user clicks in map
 
-  function executeAnalysis(event) {
+  function addStop(event) {
     reverseGeocode(event);
     
-    if(document.getElementById('r-route').checked) {
-      executeRouting(event);
-    } else {
-      executeSA(event);
-    }
-  }
-
-  async function executeRouting(event) {
-    // Execute the route task if 2 or more stops are input
-    routeParams.stops.features.push(addStop(event));
-    routeParams.startTime = getTime(); 
-    routeParams.polygonBarriers = await getBarriers();
-    if (routeParams.stops.features.length >= 2) {
-      routeTask.solve(routeParams).then(result => {
-        var routeResult = result.routeResults[0].route;
-        addRoute(routeResult);
-      });
-    }
-  }
-  
-  function addStop(event) {
     let stop = new Graphic({
       geometry: event.mapPoint,
       symbol: stopSymbol
     });
-    routeLayer.add(stop);
-    return stop;
+    stopsLayer.add(stop);
+
+    executeAnalysis();
   }
 
   function addRoute(route) {
@@ -190,11 +175,57 @@ require([
     addListItem('list-routes', drivetime, 'navigation');
   }
 
-  function executeSA(event) {
+  function deleteAll(event) {
     deleteStops();
+    deleteRoutes();
+  }
+  
+  function deleteStops() {
+    stopsLayer.removeAll();
+    routeParams.stops.features = []; //Remove stops from analysis;
+    let stops = document.getElementById("list-stops");
+    stops.innerHTML = '';
+  }
+
+  function deleteRoutes() {
+    routeLayer.removeAll();
+    let routes = document.getElementById("list-routes");
+    routes.innerHTML = '';
+  }
+
+  function executeAnalysis() {
+    if(document.getElementById('r-route').checked) {
+      executeRouting();
+    } else {
+      executeSA();
+    }
+  }
+
+  async function executeRouting() {
+    deleteRoutes();
+    routeParams.stops.features = [];
+    stopsLayer.graphics.forEach(g => {
+      routeParams.stops.features.push(g);
+    });
+    
+    routeParams.startTime = getTime(); 
+    routeParams.polygonBarriers = await getBarriers();
+    if (routeParams.stops.features.length >= 2) { // Solve routing if more than 2 stops
+      routeTask.solve(routeParams).then(result => {
+        var routeResult = result.routeResults[0].route;
+        addRoute(routeResult);
+      });
+    }
+  }
+  
+
+
+  function executeSA() {
+    let stop = stopsLayer.graphics.items[stopsLayer.graphics.length - 1];
+    deleteAll();
 
     var featureSet = new FeatureSet({
-      features: [addStop(event)]
+      features: [stop]
     });
     // Set all of the input parameters for the service
     var saParams = new ServiceAreaParameters({
