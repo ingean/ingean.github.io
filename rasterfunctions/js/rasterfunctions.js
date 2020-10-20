@@ -10,15 +10,15 @@ require([
   "esri/identity/IdentityManager"
 ], function(Map, MapView, Extent, Basemap, TileLayer, ImageryLayer, RasterFunction, Slider,IdentityManager) {
     
-  //Token expires: Friday, August 21, 2020 11:33:47
+  //Token expires: Wednesday, October 20, 2021 7:59:37.555 PM
   //Token http referer: https://ingean.github.io
   IdentityManager.registerToken({
-    server: "https://services2.geodataonline.no/arcgis/rest/services",
-    token: "GFKw0mC1pVj4AI3BMVBpdBSRby7s4G4fzauZze-YW8w8h1f47kOrkPMv_BztdKFDvJeHKBFsnT3K4DYCtaV2Xw.."
+    server: "https://services.geodataonline.no/arcgis/rest/services",
+    token: "QLqpZnvxuOtYnEZ0Gm_mKENbOlhf4NzoHAPzOvw73Sld64FA57PONEyFUoFR9GkwEJaJWOKd-P8jiZM5bWJJZA.."
   });
 
   //Shared publicly from AGOL
-  const urlGeomapDTM = 'https://utility.arcgis.com/usrsvcs/servers/7f3c945cd9cd4c3eba86b5d1fc3708f9/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer';
+  const urlGeomapDTM = 'https://utility.arcgis.com/usrsvcs/servers/781a5b76174e40d9a1e7f6f7400611fb/rest/services/Geomap_UTM33_EUREF89/GeomapDTM/ImageServer';
   const urlGeocacheGray = 'https://services.geodataonline.no/arcgis/rest/services/Geocache_UTM33_EUREF89/GeocacheGraatone/MapServer';
 
   var tileLayer = new TileLayer({
