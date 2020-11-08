@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   let events = await getCalendarEvents();
  
-  var containerEl = document.getElementById('external-events'); 
+  var containerEl = document.getElementById('external-events-container'); 
   var calendarEl = document.getElementById('calendar');
 
   var Draggable = FullCalendar.Draggable;
