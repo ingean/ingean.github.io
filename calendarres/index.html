@@ -17,36 +17,41 @@
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/locales-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@5.3.1/main.global.min.js"></script>
   </head>
   <body>
     
     <!-- Navigation bar -->
-    <header class="top-nav fade-in">
-      <div class="grid-container">
-        <div class="column-24">
-          <div class="tablet-hide">
-            <a class="skip-to-content" href="#skip-to-content">Skip To Content</a>
-            <a href="#" class="top-nav-title">Ressurstilgjengelighet</a>
-          </div>
-          <div class="tablet-show top-nav-flex">
-            <nav class="top-nav-flex-list" role="navigation" aria-labelledby="topnav">
-              <a href="/" class="icon-ui-menu top-nav-link js-drawer-toggle" data-drawer="left"><span class="phone-hide">Meny</span></a>
-            </nav>
-            <header class="top-nav-flex-title">
-              <a href="/" class="top-nav-link">Ressurs <span class="phone-hide">tilgjengelighet</span></a>
-            </header>
-          </div>
-        </div>
-      </div>
-    </header>
+    
 
-    <main>
+    <div id='external-events'>
+      <p>
+        <strong>Tilgjengelighet</strong>
+      </p>
+    
+      <!-- <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+        <div id='resource-25' class="label-blue fc-event-main" data-event='{ "title": "Ressurs 25%" }'>25% kapasitet</div>
+      </div>
+      <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+        <div id='resource-50' class="label-blue fc-event-main" data-event='{ "title": "Ressurs 50%" }'>50% kapasitet</div>
+      </div>
+      <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+        <div id='resource-75' class="label-blue fc-event-main" data-event='{ "title": "Ressurs 75%" }'>75% kapasitet</div>
+      </div>
+      <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+        <div id='resource-100' class="label-blue fc-event-main" data-event='{ "title": "Ressurs 100%" }'>100% kapasitet</div>
+      </div> -->
+    </div>
+    
+    <div id='calendar-container'>
       <div id='calendar'></div>
-    </main>
+    </div>
     
     <!-- Scripts-->
     <script type="text/javascript" src="js/lib/moment.loc.min.js"></script>
-    <script type="text/javascript" src="js/arcgis.js"></script>
+    <script type="text/javascript" src="js/utils/arcgis.js"></script>
+    <script type="text/javascript" src="js/getEvents.js"></script>
+    <script type="text/javascript" src="js/addEvent.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>

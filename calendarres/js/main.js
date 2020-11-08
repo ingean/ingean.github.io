@@ -2,11 +2,26 @@ document.addEventListener('DOMContentLoaded', async function() {
   moment.locale('nb_NO');
 
   let events = await getCalendarEvents();
-  
+ 
+  var containerEl = document.getElementById('external-events'); 
   var calendarEl = document.getElementById('calendar');
 
+  var Draggable = FullCalendar.Draggable;
+  new Draggable(containerEl, {
+    itemSelector: '.fc-event',
+    eventData: function(eventEl) {
+      let details = JSON.parse(eventEl.childNodes[0].getAttribute('data-eventDetails'));
+      return {
+        title: `${details.resource} - ${details.location} (${details.capacity}%)`
+        //title: 'Test'
+      };
+    }
+  });
+  
   var calendar = new FullCalendar.Calendar(calendarEl, {
     locale: 'nb',
+    editable: true,
+    droppable: true,
     initialView: 'dayGridMonth',
     initialDate: moment().format('YYYY-MM-DD'),
     headerToolbar: {
@@ -14,8 +29,10 @@ document.addEventListener('DOMContentLoaded', async function() {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-    events: events
+    events: events,
+    drop: function(info) {
+      addEventToArcGIS(info);
+      }
   });
-
   calendar.render();
 });
