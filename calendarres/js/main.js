@@ -12,14 +12,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     eventData: function(eventEl) {
       let details = JSON.parse(eventEl.childNodes[0].getAttribute('data-eventDetails'));
       return {
-        title: `${details.resource} - ${details.location} (${details.capacity}%)`
-        //title: 'Test'
+        title: `${details.resource} - ${details.location} (${details.capacity}%)`,
+        backgroundColor: eventColor[details.capacity]
       };
     }
   });
   
   var calendar = new FullCalendar.Calendar(calendarEl, {
     locale: 'nb',
+    height: 'auto',
     editable: true,
     droppable: true,
     initialView: 'dayGridMonth',
