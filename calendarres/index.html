@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>VerSa | Ressurstilgjengelighet</title>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.16/esri/themes/light/main.css"
+    >
+    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/css/calcite-web.min.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.css' rel='stylesheet' />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/locales-all.min.js"></script>
+  </head>
+  <body>
+    
+    <!-- Navigation bar -->
+    <header class="top-nav fade-in">
+      <div class="grid-container">
+        <div class="column-24">
+          <div class="tablet-hide">
+            <a class="skip-to-content" href="#skip-to-content">Skip To Content</a>
+            <a href="#" class="top-nav-title">Ressurstilgjengelighet</a>
+          </div>
+          <div class="tablet-show top-nav-flex">
+            <nav class="top-nav-flex-list" role="navigation" aria-labelledby="topnav">
+              <a href="/" class="icon-ui-menu top-nav-link js-drawer-toggle" data-drawer="left"><span class="phone-hide">Meny</span></a>
+            </nav>
+            <header class="top-nav-flex-title">
+              <a href="/" class="top-nav-link">Ressurs <span class="phone-hide">tilgjengelighet</span></a>
+            </header>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div id='calendar'></div>
+    </main>
+    
+    <!-- Scripts-->
+    <script type="text/javascript" src="js/lib/moment.loc.min.js"></script>
+    <script type="text/javascript" src="js/arcgis.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
+</html>
