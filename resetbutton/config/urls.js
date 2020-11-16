@@ -1,1 +1,0 @@
-const urlProxyReset = 'https://proxy-dot-geodata-208509.appspot.com/admin/reset';
